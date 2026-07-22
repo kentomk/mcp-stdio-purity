@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/kento-matsuki/mcp-stdio-purity/internal/checker"
+	"github.com/kentomk/mcp-stdio-purity/internal/checker"
 )
 
 var version = "dev"

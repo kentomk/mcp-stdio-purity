@@ -1,3 +1,3 @@
-module github.com/kento-matsuki/mcp-stdio-purity
+module github.com/kentomk/mcp-stdio-purity
 
 go 1.26

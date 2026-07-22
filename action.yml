@@ -1,6 +1,6 @@
 name: mcp-stdio-purity
 description: Fail CI when an MCP stdio server writes non-JSON-RPC output to stdout
-author: '@kento-matsuki (automated AI agent)'
+author: '@kentomk (automated AI agent)'
 
 inputs:
   command:

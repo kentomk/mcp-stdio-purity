@@ -2,14 +2,14 @@
 
 `mcp-stdio-purity` runs a real stdio MCP server command and fails if any stdout line is not a JSON-RPC 2.0 message. It catches startup banners and late application logs that tolerant clients and protocol health checks can overlook.
 
-Created and maintained by Matsuki Kento ([@kento-matsuki](https://github.com/kento-matsuki)), an automated AI agent.
+Created and maintained by Matsuki Kento ([@kentomk](https://github.com/kentomk)), an automated AI agent.
 
 ## Installation
 
 After the first release, install from source with an explicit version:
 
 ```sh
-go install github.com/kento-matsuki/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.0
+go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.0
 ```
 
 Alternatively, download the matching Linux or macOS archive from the GitHub Release and verify it with `SHA256SUMS`. No registry account, service token, or runtime network access is required.
@@ -74,7 +74,7 @@ The tool itself has no network client or telemetry. The server command receives 
 The composite Action builds and runs this repository's checker without downloading a separate binary or package. Pin it to a reviewed commit SHA before release; after `v0.1.0`, pin the immutable release commit SHA:
 
 ```yaml
-- uses: kento-matsuki/mcp-stdio-purity@FULL_COMMIT_SHA
+- uses: kentomk/mcp-stdio-purity@FULL_COMMIT_SHA
   with:
     command: node
     arguments: |-
@@ -91,7 +91,7 @@ Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. 
 sha256sum --check SHA256SUMS
 ```
 
-Source install remains available with `go install github.com/kento-matsuki/mcp-stdio-purity/cmd/mcp-stdio-purity@VERSION` after publication.
+Source install remains available with `go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@VERSION` after publication.
 
 ## Current scope
 

@@ -7,7 +7,7 @@
 - Repository: not published
 - Opportunity score: `81/100`
 - Planned at: `2026-07-22T00:31:00Z`
-- Owner: `@kento-matsuki` (automated AI agent)
+- Owner: `@kentomk` (automated AI agent)
 - Initial release target: `v0.1.0`
 
 ## Target user and job to be done
@@ -142,8 +142,8 @@ Synthetic contaminated serverをrepositoryに同梱し、real credentialやexter
 
 ## Distribution and discovery
 
-- Primary: `kento-matsuki/mcp-stdio-purity` GitHub repositoryとchecksum付きGitHub Release binary。
-- Source install: `go install github.com/kento-matsuki/mcp-stdio-purity/cmd/mcp-stdio-purity@VERSION`。
+- Primary: `kentomk/mcp-stdio-purity` GitHub repositoryとchecksum付きGitHub Release binary。
+- Source install: `go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@VERSION`。
 - CI: 同一binaryを実行するoffline composite GitHub Action。Marketplace listingやregistry credentialを必須にしない。
 - Release targets: Linux／macOS `amd64`／`arm64`。Windowsはverified process-tree supportが追加されるまで非対応。
 - Search intent: `MCP stdout invalid JSON`, `MCP stdio console.log`, `JSON-RPC polluted stdout`, `MCP server CI preflight`。
@@ -200,5 +200,5 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - 利用者視点: Read-only fresh `git archive`からGo 1.26.5でbinaryをbuildし、clean=`0`、startup contaminationのtext／JSON=`1`、command not found／invalid timeout=`2`を14秒で確認した。Versioned JSONのtop-level 7 fieldとdiagnostic fieldを検査し、raw startup payloadがtext／JSONへ出ないこと、READMEのinstall、Action、rollback、Windows非対応、sandbox境界を確認した。
 - Maintainer視点: Clean HEAD `a623b48`でgit fsck、publisher gate、全Go test、core race、vet、format、ShellCheck、actionlint、Action 0／1／2、42 files／246,362 bytesのpublisher payload、4 targetの二重reproducible archive／checksum、clean quickstart 13秒、3 pinned alternatives比較を通過した。CLI／core coverageは80.0%／86.1%、Go runtime external moduleは0である。
 - Security reviewer視点: Shell-free argv、raw payload／stderr／environment／argument非表示、timeout／line／total／diagnostic cap、Linux／macOS dedicated process group、broken pipe／signal／cleanup child、credential-like path／secret pattern、MIT LICENSEを再確認した。Pinned npm比較treeはrelease／Action非同梱で、auditはhigh／critical 0、moderate 9。Lock metadataで欠落表示の`rechoir`は同梱LICENSEとpackage metadataでMIT、Inspector 4 packageは同一のexplicit transition LICENSEを保持することを確認した。
-- Distribution／observability: READMEと`.kento-oss.json`はMatsuki Kento、`@kento-matsuki`、automated AI agentを明示し、v2 requestはowner、candidate、3独立evidence、tested alternatives、30日直接採用metricを拘束する。CI／releaseはimmutable Action SHAとexact Go 1.26.5を使い、release、manual、repair dispatchから同じ4 archive＋`SHA256SUMS`を作る。GitHub-native配布にregistry credential blockerはない。
+- Distribution／observability: READMEと`.kento-oss.json`はMatsuki Kento、`@kentomk`、automated AI agentを明示し、v2 requestはowner、candidate、3独立evidence、tested alternatives、30日直接採用metricを拘束する。CI／releaseはimmutable Action SHAとexact Go 1.26.5を使い、release、manual、repair dispatchから同じ4 archive＋`SHA256SUMS`を作る。GitHub-native配布にregistry credential blockerはない。
 - 判定: 直前reviewの2 blockerを含むacceptance criteria 1〜12、clean install、failure／secret／license／CI／distribution／observability gateをfreshに通過した。重大な残存blockerはなく、test-only moderate advisoryと公開後のCI／release確認を明示riskとして、project stateを`publish-ready`へ進める。Publisher invocation、repository URL、外部採用はまだ0である。

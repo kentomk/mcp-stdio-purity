@@ -7,7 +7,7 @@ cd "$project_root"
 jq -e '
   .schemaVersion == 2
   and .action == "update"
-  and .owner == "kento-matsuki"
+  and .owner == "kentomk"
   and .name == "mcp-stdio-purity"
   and (.description | type == "string" and length >= 20 and length <= 160)
   and (.topics | type == "array" and length >= 1 and length <= 10 and index("kento-oss") != null and all(type == "string"))
@@ -34,21 +34,21 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "Make release verification host portable"
+  and .commitMessage == "chore: adopt kentomk GitHub handle"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
   .schemaVersion == 1
   and .candidateId == $request[0].candidateId
   and .owner == $request[0].owner
-  and (.createdBy | test("Matsuki Kento") and test("@kento-matsuki") and test("AI|automated"; "i"))
+  and (.createdBy | test("Matsuki Kento") and test("@kentomk") and test("AI|automated"; "i"))
 ' .kento-oss.json >/dev/null
 
 grep -Eq '^## Installation\b' README.md
 grep -Eq '^## Quick start\b' README.md
 grep -Eq '60-second quick start' README.md
 grep -q 'Matsuki Kento' README.md
-grep -q '@kento-matsuki' README.md
+grep -q '@kentomk' README.md
 grep -Eiq 'AI|automated' README.md
 
 grep -Eq 'uses: actions/checkout@[0-9a-f]{40}([[:space:]]|$)' .github/workflows/ci.yml
