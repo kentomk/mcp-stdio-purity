@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "dev",
+  "command": "COMMAND",
+  "status": "error",
+  "lifecycle": {
+    "initialized": false,
+    "probeComplete": false,
+    "processExited": false,
+    "error": "spawn command"
+  },
+  "limits": {
+    "timeoutMillis": 3000,
+    "cleanupGraceMillis": 100,
+    "maxLineBytes": 1048576,
+    "maxStdoutBytes": 16777216,
+    "maxDiagnostics": 20
+  },
+  "diagnostics": []
+}

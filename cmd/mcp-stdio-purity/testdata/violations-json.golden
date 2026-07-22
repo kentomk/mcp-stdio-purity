@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "dev",
+  "command": "COMMAND",
+  "status": "violations",
+  "lifecycle": {
+    "initialized": true,
+    "probeComplete": true,
+    "processExited": true
+  },
+  "limits": {
+    "timeoutMillis": 3000,
+    "cleanupGraceMillis": 100,
+    "maxLineBytes": 1048576,
+    "maxStdoutBytes": 16777216,
+    "maxDiagnostics": 20
+  },
+  "diagnostics": [
+    {
+      "ruleId": "MSP001",
+      "reason": "invalid-json",
+      "phase": "initialize",
+      "line": 1,
+      "byteOffset": 0,
+      "byteCount": 22,
+      "message": "stdout record is not a valid JSON-RPC 2.0 message",
+      "remediation": "route logs and descendant output to stderr, then rerun the preflight"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "action": "create",
+  "owner": "kento-matsuki",
+  "name": "mcp-stdio-purity",
+  "description": "Fail CI when an MCP stdio server writes any non-JSON-RPC record to stdout during startup, probing, or cleanup.",
+  "topics": [
+    "kento-oss",
+    "mcp",
+    "json-rpc",
+    "ci",
+    "testing"
+  ],
+  "candidateId": "20260718T144541Z-7acd",
+  "targetUsers": "Maintainers who release stdio MCP servers and need client-independent transport compatibility checks in local development and CI.",
+  "jobToBeDone": "Run a real MCP server command from initialize through cleanup and fail deterministically if stdout contains anything other than JSON-RPC 2.0 records.",
+  "distributionPath": "Checksum-verified reproducible Linux and macOS archives, go install, and a source-built composite GitHub Action pinned by full commit SHA.",
+  "successMetric": "Within 30 days, one unrelated external MCP server repository uses the checker to catch real stdout contamination before release and shows the producer-side fix.",
+  "reviewAfterDays": 1,
+  "opportunityScore": 81,
+  "demandEvidence": [
+    {
+      "url": "https://github.com/camel-ai/camel/issues/2665",
+      "kind": "upstream-issue",
+      "independenceKey": "CAMEL MCP server stdout logging failure"
+    },
+    {
+      "url": "https://github.com/openai/codex/issues/21957",
+      "kind": "client-issue",
+      "independenceKey": "Codex app-server stdio stream parsing context"
+    },
+    {
+      "url": "https://github.com/merill/lokka/issues/51",
+      "kind": "maintainer-issue",
+      "independenceKey": "Lokka MCP server stdout contamination context"
+    },
+    {
+      "url": "https://github.com/RLabs-Inc/gemini-mcp/issues/30",
+      "kind": "upstream-issue",
+      "independenceKey": "Gemini MCP interactive stdout context"
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "MCP Inspector 1.0.0 CLI",
+      "url": "https://www.npmjs.com/package/@modelcontextprotocol/inspector/v/1.0.0",
+      "tested": true,
+      "gap": "Returned tools/list successfully for clean, startup, late, and cleanup contamination fixtures without turning the extra raw stdout records into a failing exit status."
+    },
+    {
+      "name": "mcp-compliance 0.16.3 strict transport and lifecycle suite",
+      "url": "https://www.npmjs.com/package/@yawlabs/mcp-compliance/v/0.16.3",
+      "tested": true,
+      "gap": "Passed the focused strict suite for clean and all three contaminated streams because valid protocol responses remained available."
+    },
+    {
+      "name": "mcp-z 1.0.5 health inspection",
+      "url": "https://www.npmjs.com/package/@mcp-z/cli/v/1.0.5",
+      "tested": true,
+      "gap": "Reported successful health for clean and all three contamination modes without enforcing an all-record stdout purity postcondition."
+    },
+    {
+      "name": "MCP 2025-11-25 stdio specification and manual raw probe",
+      "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/transports",
+      "tested": true,
+      "gap": "Defines the stdout contract and enables manual diagnosis but does not provide a content-safe bounded CI exit contract for an arbitrary real server command."
+    }
+  ],
+  "duplicateSearch": {
+    "completed": true,
+    "summary": "Installed three exact alternative versions and ran the same clean, startup, late, and cleanup fixtures; none enforced the bounded all-record purity distinction."
+  },
+  "differentiation": "A shell-free, content-safe preflight that owns raw stdout through bounded descendant cleanup and fails on every non-JSON-RPC record without emulating a full MCP client.",
+  "testCommand": "scripts/publisher-gate.sh",
+  "license": "MIT",
+  "commitMessage": "Align MCP quick start publisher contract"
+}

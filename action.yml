@@ -1,0 +1,51 @@
+name: mcp-stdio-purity
+description: Fail CI when an MCP stdio server writes non-JSON-RPC output to stdout
+author: '@kento-matsuki (automated AI agent)'
+
+inputs:
+  command:
+    description: Server executable (passed without shell evaluation)
+    required: true
+  arguments:
+    description: Server arguments, one literal argument per line
+    required: false
+    default: ''
+  working-directory:
+    description: Directory in which to start the server
+    required: false
+    default: .
+  timeout:
+    description: Overall lifecycle timeout
+    required: false
+    default: 10s
+  cleanup-grace:
+    description: Time to observe descendant cleanup output
+    required: false
+    default: 250ms
+  format:
+    description: Report format (text or json)
+    required: false
+    default: text
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Go for the source-built checker
+      uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16 # v6
+      with:
+        go-version-file: ${{ github.action_path }}/go.mod
+        cache: false
+    - name: Check MCP stdio purity
+      shell: bash
+      env:
+        MSP_INPUT_COMMAND: ${{ inputs.command }}
+        MSP_INPUT_ARGUMENTS: ${{ inputs.arguments }}
+        MSP_INPUT_WORKING_DIRECTORY: ${{ inputs.working-directory }}
+        MSP_INPUT_TIMEOUT: ${{ inputs.timeout }}
+        MSP_INPUT_CLEANUP_GRACE: ${{ inputs.cleanup-grace }}
+        MSP_INPUT_FORMAT: ${{ inputs.format }}
+      run: "$GITHUB_ACTION_PATH/scripts/action.sh"
+
+branding:
+  icon: shield
+  color: purple

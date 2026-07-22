@@ -1,0 +1,2 @@
+MSP001 invalid-json phase=initialize line=1 offset=0 bytes=22
+FAIL stdout purity violations=1

@@ -1,0 +1,15 @@
+# Security policy
+
+## Supported versions
+
+The project is not published yet. Security fixes target the current development branch.
+
+## Reporting
+
+Do not put tokens, environment values, raw MCP payloads, server logs, or production command arguments in a public report. A private reporting route is not available yet; use a minimal synthetic reproducer and redact all sensitive values.
+
+## Security boundary
+
+`mcp-stdio-purity` does not use a shell, network client, telemetry, or credential store. Reports omit raw stdout, stderr, environment values, and command arguments. The explicitly launched server inherits the caller environment and may access the network and filesystem; this tool does not sandbox it.
+
+Treat payload disclosure, command invocation through a shell, unbounded output, hung child processes, or orphan descendants as security bugs. Linux and macOS commands run in a dedicated process group; timeout and cleanup-grace paths terminate that group and close the private stdout pipe.

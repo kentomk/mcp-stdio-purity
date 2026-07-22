@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "dev",
+  "command": "COMMAND",
+  "status": "passed",
+  "lifecycle": {
+    "initialized": true,
+    "probeComplete": true,
+    "processExited": true
+  },
+  "limits": {
+    "timeoutMillis": 3000,
+    "cleanupGraceMillis": 100,
+    "maxLineBytes": 1048576,
+    "maxStdoutBytes": 16777216,
+    "maxDiagnostics": 20
+  },
+  "diagnostics": []
+}
