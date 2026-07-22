@@ -6,7 +6,7 @@ cd "$project_root"
 
 jq -e '
   .schemaVersion == 2
-  and .action == "create"
+  and .action == "update"
   and .owner == "kento-matsuki"
   and .name == "mcp-stdio-purity"
   and (.description | type == "string" and length >= 20 and length <= 160)
@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "Align MCP quick start publisher contract"
+  and .commitMessage == "Make release verification host portable"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '

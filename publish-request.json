@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "action": "create",
+  "action": "update",
   "owner": "kento-matsuki",
   "name": "mcp-stdio-purity",
   "description": "Fail CI when an MCP stdio server writes any non-JSON-RPC record to stdout during startup, probing, or cleanup.",
@@ -73,5 +73,5 @@
   "differentiation": "A shell-free, content-safe preflight that owns raw stdout through bounded descendant cleanup and fails on every non-JSON-RPC record without emulating a full MCP client.",
   "testCommand": "scripts/publisher-gate.sh",
   "license": "MIT",
-  "commitMessage": "Align MCP quick start publisher contract"
+  "commitMessage": "Make release verification host portable"
 }

@@ -26,6 +26,14 @@ else
 fi
 
 mkdir "$release_root/extract"
-tar -xzf "$release_root/first/mcp-stdio-purity_v0.1.0_linux_arm64.tar.gz" -C "$release_root/extract"
+host_target="$(go env GOOS)_$(go env GOARCH)"
+case "$host_target" in
+  linux_amd64|linux_arm64|darwin_amd64|darwin_arm64) ;;
+  *)
+    echo "release execution test does not support host target: $host_target" >&2
+    exit 1
+    ;;
+esac
+tar -xzf "$release_root/first/mcp-stdio-purity_v0.1.0_${host_target}.tar.gz" -C "$release_root/extract"
 [ "$("$release_root/extract/mcp-stdio-purity" version)" = v0.1.0 ]
 cmp "$project_root/LICENSE" "$release_root/extract/LICENSE"
