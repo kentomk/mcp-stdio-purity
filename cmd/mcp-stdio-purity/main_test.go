@@ -74,6 +74,36 @@ func TestCLIGoldenExitContracts(t *testing.T) {
 	}
 }
 
+func TestHelpIsSuccessfulAndUsesStdout(t *testing.T) {
+	for _, args := range [][]string{
+		{"help"},
+		{"--help"},
+		{"-h"},
+		{"check", "--help"},
+		{"check", "-h"},
+	} {
+		t.Run(strings.Join(args, "_"), func(t *testing.T) {
+			var stdout, stderr bytes.Buffer
+			if status := run(args, &stdout, &stderr); status != 0 {
+				t.Fatalf("exit=%d, want 0; stderr=%q", status, stderr.String())
+			}
+			if stderr.Len() != 0 {
+				t.Fatalf("unexpected stderr: %q", stderr.String())
+			}
+			for _, expected := range []string{
+				"mcp-stdio-purity checks a real stdio MCP server",
+				"mcp-stdio-purity check [flags] -- COMMAND [ARG...]",
+				"--format text|json",
+				"MSP001",
+			} {
+				if !strings.Contains(stdout.String(), expected) {
+					t.Fatalf("help is missing %q:\n%s", expected, stdout.String())
+				}
+			}
+		})
+	}
+}
+
 type brokenWriter struct{}
 
 func (brokenWriter) Write([]byte) (int, error) { return 0, errors.New("synthetic broken pipe") }

@@ -202,3 +202,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - Security reviewer視点: Shell-free argv、raw payload／stderr／environment／argument非表示、timeout／line／total／diagnostic cap、Linux／macOS dedicated process group、broken pipe／signal／cleanup child、credential-like path／secret pattern、MIT LICENSEを再確認した。Pinned npm比較treeはrelease／Action非同梱で、auditはhigh／critical 0、moderate 9。Lock metadataで欠落表示の`rechoir`は同梱LICENSEとpackage metadataでMIT、Inspector 4 packageは同一のexplicit transition LICENSEを保持することを確認した。
 - Distribution／observability: READMEと`.kento-oss.json`はMatsuki Kento、`@kentomk`、automated AI agentを明示し、v2 requestはowner、candidate、3独立evidence、tested alternatives、30日直接採用metricを拘束する。CI／releaseはimmutable Action SHAとexact Go 1.26.5を使い、release、manual、repair dispatchから同じ4 archive＋`SHA256SUMS`を作る。GitHub-native配布にregistry credential blockerはない。
 - 判定: 直前reviewの2 blockerを含むacceptance criteria 1〜12、clean install、failure／secret／license／CI／distribution／observability gateをfreshに通過した。重大な残存blockerはなく、test-only moderate advisoryと公開後のCI／release確認を明示riskとして、project stateを`publish-ready`へ進める。Publisher invocation、repository URL、外部採用はまだ0である。
+
+## Maintenance
+
+### 2026-07-23T14:20:00Z — CLI help discovery repair
+
+- Clean local実行でtop-level `--help`がusageをstderrへ出してexit `2`となり、利用者とagentがcommand contractを安全に探索できない導入funnel障害を再現した。
+- `--help`、`-h`、`help`、`check --help`、`check -h`をstdout／exit `0`へ統一し、job、usage、主要flag、exit code、`MSP001`を含む安定したhelp contractを追加した。不明commandは従来どおりstderr／exit `2`を維持する。
+- 5つのhelp routeについてstdout、stderr、exit code、必須contractをunit testへ固定した。Focused test、実CLI smoke、full publisher gateは成功した。
+- Public main CI成功後にv0.1.1をreleaseし、4 platform archiveと`SHA256SUMS`、distribution completeを確認する。Aggregate cloneはtrial signalに留め、直接採用へ数えない。

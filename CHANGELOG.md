@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Make top-level `--help`, `-h`, `help`, and check help return a stable usage contract on stdout with exit code `0`.
 - Add the initial shell-free stdio checker.
 - Add content-safe text and JSON reports with stable `MSP001` diagnostics.
 - Add clean, startup-banner, and late-log synthetic fixture coverage.

@@ -14,11 +14,36 @@ import (
 
 var version = "dev"
 
+const helpText = `mcp-stdio-purity checks a real stdio MCP server for non-JSON-RPC stdout.
+
+Usage:
+  mcp-stdio-purity check [flags] -- COMMAND [ARG...]
+  mcp-stdio-purity version
+  mcp-stdio-purity help
+
+Check flags:
+  --format text|json
+  --timeout DURATION
+  --cleanup-grace DURATION
+  --max-line-bytes N
+  --max-stdout-bytes N
+  --max-diagnostics N
+
+Exit codes:
+  0  stdout stayed JSON-RPC-pure
+  1  one or more MSP001 purity violations were found
+  2  invalid arguments or an operational failure
+`
+
 func main() {
 	os.Exit(run(os.Args[1:], os.Stdout, os.Stderr))
 }
 
 func run(args []string, stdout, stderr io.Writer) int {
+	if len(args) == 1 && (args[0] == "help" || args[0] == "--help" || args[0] == "-h") {
+		fmt.Fprint(stdout, helpText)
+		return 0
+	}
 	if len(args) == 1 && args[0] == "version" {
 		fmt.Fprintln(stdout, version)
 		return 0
@@ -26,6 +51,10 @@ func run(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 || args[0] != "check" {
 		fmt.Fprintln(stderr, "usage: mcp-stdio-purity check [flags] -- COMMAND [ARG...]")
 		return 2
+	}
+	if len(args) == 2 && (args[1] == "--help" || args[1] == "-h") {
+		fmt.Fprint(stdout, helpText)
+		return 0
 	}
 
 	flags := flag.NewFlagSet("check", flag.ContinueOnError)
