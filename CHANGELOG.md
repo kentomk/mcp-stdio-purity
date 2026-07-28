@@ -4,6 +4,11 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Repair the published install path to use `v0.1.1`, an immutable Action
+  revision, and single-archive checksum verification on Linux and macOS.
+- Add release and publisher regressions for the copy-ready verification path.
+- Replace the full Inspector test dependency with the pinned CLI-only package
+  after a transitive high-severity denial-of-service advisory blocked the gate.
 - Make top-level `--help`, `-h`, `help`, and check help return a stable usage contract on stdout with exit code `0`.
 - Add the initial shell-free stdio checker.
 - Add content-safe text and JSON reports with stable `MSP001` diagnostics.

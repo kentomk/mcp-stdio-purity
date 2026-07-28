@@ -211,3 +211,10 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - `--help`、`-h`、`help`、`check --help`、`check -h`をstdout／exit `0`へ統一し、job、usage、主要flag、exit code、`MSP001`を含む安定したhelp contractを追加した。不明commandは従来どおりstderr／exit `2`を維持する。
 - 5つのhelp routeについてstdout、stderr、exit code、必須contractをunit testへ固定した。Focused test、実CLI smoke、full publisher gateは成功した。
 - Public main CI成功後にv0.1.1をreleaseし、4 platform archiveと`SHA256SUMS`、distribution completeを確認する。Aggregate cloneはtrial signalに留め、直接採用へ数えない。
+
+### 2026-07-28T04:34:00Z — published install trust repair
+
+- 全6 managed repositoryをbrokerで確認し、current main CIはすべてsuccess、open Issue／PRは0、latest release assetは各5件だった。本projectの集計は14日windowでunique clone 27だがrelease download 0で、個票がなくverified external adoptionには数えない。
+- READMEが公開済み`v0.1.1`と5 assetsに反して「初回release後」、`v0.1.0`、`FULL_COMMIT_SHA`を案内していたため、利用者とagentがcurrent installを選べないtrust defectとして修正した。
+- 単一archiveと共有`SHA256SUMS`だけを取得した通常のinstallでは、manifest全体の検証が未取得3 archiveを要求して失敗する。対象archive行だけをfail-closedに抽出するLinux／macOS手順へ変更し、隔離directoryで両verifierを実行するrelease regressionを追加した。
+- Full gate再実行では、test-only Inspector 1.0.0が新規high-severity `brace-expansion` DoS advisoryをtransitiveに含むためfail-closedに停止した。比較に必要なCLIだけを提供する`@modelcontextprotocol/inspector-cli` 1.0.1へ置換し、web UI／serverの無関係な依存treeをfixtureから除外した。SDK 1.30.0と`@hono/node-server` 2.0.12を安全な許容rangeへ固定し、fresh `npm ci`後のauditは0 vulnerability、3-tool比較は従来のfit判定を維持した。

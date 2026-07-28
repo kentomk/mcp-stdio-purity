@@ -6,13 +6,33 @@ Created and maintained by Matsuki Kento ([@kentomk](https://github.com/kentomk))
 
 ## Installation
 
-After the first release, install from source with an explicit version:
+Install the published `v0.1.1` source release with Go 1.26 or later:
 
 ```sh
-go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.0
+go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.1
 ```
 
-Alternatively, download the matching Linux or macOS archive from the GitHub Release and verify it with `SHA256SUMS`. No registry account, service token, or runtime network access is required.
+Alternatively, download the matching archive and `SHA256SUMS` from the
+[`v0.1.1` release](https://github.com/kentomk/mcp-stdio-purity/releases/tag/v0.1.1).
+Verify only the archive you downloaded; checking the whole manifest requires
+all four platform archives to be present.
+
+```sh
+archive=mcp-stdio-purity_v0.1.1_linux_amd64.tar.gz
+grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
+tar -xzf "$archive"
+./mcp-stdio-purity version
+```
+
+On macOS, replace the verification command with:
+
+```sh
+grep "  ${archive}$" SHA256SUMS | shasum -a 256 --check -
+```
+
+Replace `linux_amd64` with `linux_arm64`, `darwin_amd64`, or `darwin_arm64`
+for another supported platform. No registry account, service token, or runtime
+network access is required.
 
 ## Quick start
 
@@ -71,10 +91,10 @@ The tool itself has no network client or telemetry. The server command receives 
 
 ## GitHub Action
 
-The composite Action builds and runs this repository's checker without downloading a separate binary or package. Pin it to a reviewed commit SHA before release; after `v0.1.0`, pin the immutable release commit SHA:
+The composite Action builds and runs this repository's checker without downloading a separate binary or package. Pin it to the reviewed commit for `v0.1.1`:
 
 ```yaml
-- uses: kentomk/mcp-stdio-purity@FULL_COMMIT_SHA
+- uses: kentomk/mcp-stdio-purity@c227f6e14601d50382006084554ffd03db363cc5
   with:
     command: node
     arguments: |-
@@ -85,19 +105,28 @@ The composite Action builds and runs this repository's checker without downloadi
 
 ## Release archives
 
-Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. Each archive contains only `mcp-stdio-purity` and `LICENSE`. Verify before extracting:
+Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. Each archive contains only `mcp-stdio-purity` and `LICENSE`. Verify a single downloaded archive without requiring the other platform archives:
 
 ```sh
-sha256sum --check SHA256SUMS
+archive=mcp-stdio-purity_v0.1.1_linux_amd64.tar.gz
+grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
 ```
 
-Source install remains available with `go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@VERSION` after publication.
+Use `shasum -a 256 --check -` instead of `sha256sum --check --strict -` on
+macOS. Source install remains available with
+`go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.1`.
 
 ## Current scope
 
 The checker detects invalid UTF-8, invalid JSON, non-JSON-RPC envelopes, and unterminated stdout records. It accepts server-initiated JSON-RPC requests, notifications, success responses, and error responses. Synthetic tests cover startup, late, post-response, and descendant cleanup contamination, plus timeout and bounded-output failures.
 
-The review gate pins Inspector 1.0.0, mcp-compliance 0.16.3, and mcp-z 1.0.5 in an isolated npm fixture. All three accept the clean control and the startup, late, and cleanup contamination fixtures; `mcp-stdio-purity` accepts only clean and returns `MSP001` for all three contaminated streams. The comparison dependencies are test-only and are not included in release archives or the Action runtime.
+The review gate pins the Inspector CLI 1.0.1, mcp-compliance 0.16.3, and
+mcp-z 1.0.5 in an isolated npm fixture. All three accept the clean control and
+the startup, late, and cleanup contamination fixtures; `mcp-stdio-purity`
+accepts only clean and returns `MSP001` for all three contaminated streams.
+The CLI-only Inspector package intentionally avoids the unrelated web UI and
+server dependency trees. The comparison dependencies are test-only and are not
+included in release archives or the Action runtime.
 
 Streamable HTTP, client emulation, automatic logger fixes, hosted operation, and Windows process-tree support are not V1 goals.
 

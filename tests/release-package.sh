@@ -25,6 +25,23 @@ else
   (cd "$release_root/first" && shasum -a 256 -c SHA256SUMS)
 fi
 
+single_archive=mcp-stdio-purity_v0.1.0_linux_amd64.tar.gz
+mkdir "$release_root/single"
+cp "$release_root/first/$single_archive" "$release_root/single/"
+cp "$release_root/first/SHA256SUMS" "$release_root/single/"
+(
+  cd "$release_root/single"
+  grep "  ${single_archive}$" SHA256SUMS |
+    sha256sum --check --strict -
+)
+if command -v shasum >/dev/null 2>&1; then
+  (
+    cd "$release_root/single"
+    grep "  ${single_archive}$" SHA256SUMS |
+      shasum -a 256 --check -
+  )
+fi
+
 mkdir "$release_root/extract"
 host_target="$(go env GOOS)_$(go env GOARCH)"
 case "$host_target" in

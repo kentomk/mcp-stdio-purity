@@ -6,7 +6,7 @@ project_root=$(unset CDPATH; cd -- "$comparison_root/../.." && pwd)
 node_modules=${MSP_ALTERNATIVE_NODE_MODULES:-$comparison_root/node_modules}
 install_root=$comparison_root
 
-if [ ! -x "$node_modules/.bin/mcp-inspector" ] ||
+if [ ! -x "$node_modules/.bin/mcp-inspector-cli" ] ||
    [ ! -x "$node_modules/.bin/mcp-compliance" ] ||
    [ ! -x "$node_modules/.bin/mcp-z" ]; then
   command -v npm >/dev/null 2>&1 || { echo 'npm is required for the isolated alternative comparison' >&2; exit 2; }
@@ -18,7 +18,7 @@ fi
 node -e '
 const root = process.argv[1];
 const expected = {
-  "@modelcontextprotocol/inspector": "1.0.0",
+  "@modelcontextprotocol/inspector-cli": "1.0.1",
   "@yawlabs/mcp-compliance": "0.16.3",
   "@mcp-z/cli": "1.0.5",
 };
@@ -64,8 +64,12 @@ fs.writeFileSync(output, JSON.stringify({mcpServers: {fixture: {command: process
 }
 
 for mode in clean startup late cleanup; do
+  # shellcheck disable=SC2016
   run_expect_zero "inspector-$mode" \
-    "$node_modules/.bin/mcp-inspector" --cli node "$comparison_root/server.mjs" --mode "$mode" --method tools/list
+    sh -c 'cd "$1" && shift && exec "$@"' sh \
+      "$node_modules/@modelcontextprotocol/inspector-cli/build" \
+      "$node_modules/.bin/mcp-inspector-cli" --cli node "$comparison_root/server.mjs" \
+      --mode "$mode" --method tools/list
 
   run_expect_zero "compliance-$mode" \
     "$node_modules/.bin/mcp-compliance" test --format json --strict \

@@ -4,9 +4,12 @@
   "version": "0.0.0",
   "description": "Isolated pinned comparison fixture; not distributed",
   "license": "MIT",
+  "overrides": {
+    "@hono/node-server": "2.0.12"
+  },
   "dependencies": {
     "@mcp-z/cli": "1.0.5",
-    "@modelcontextprotocol/inspector": "1.0.0",
+    "@modelcontextprotocol/inspector-cli": "1.0.1",
     "@yawlabs/mcp-compliance": "0.16.3"
   }
 }
