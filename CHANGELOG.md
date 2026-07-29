@@ -4,6 +4,8 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Point source installs, release downloads, and the composite Action example to
+  the current verified `v0.1.2` release and its immutable public main revision.
 - Repair the published install path to use `v0.1.1`, an immutable Action
   revision, and single-archive checksum verification on Linux and macOS.
 - Add release and publisher regressions for the copy-ready verification path.

@@ -218,3 +218,9 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - READMEが公開済み`v0.1.1`と5 assetsに反して「初回release後」、`v0.1.0`、`FULL_COMMIT_SHA`を案内していたため、利用者とagentがcurrent installを選べないtrust defectとして修正した。
 - 単一archiveと共有`SHA256SUMS`だけを取得した通常のinstallでは、manifest全体の検証が未取得3 archiveを要求して失敗する。対象archive行だけをfail-closedに抽出するLinux／macOS手順へ変更し、隔離directoryで両verifierを実行するrelease regressionを追加した。
 - Full gate再実行では、test-only Inspector 1.0.0が新規high-severity `brace-expansion` DoS advisoryをtransitiveに含むためfail-closedに停止した。比較に必要なCLIだけを提供する`@modelcontextprotocol/inspector-cli` 1.0.1へ置換し、web UI／serverの無関係な依存treeをfixtureから除外した。SDK 1.30.0と`@hono/node-server` 2.0.12を安全な許容rangeへ固定し、fresh `npm ci`後のauditは0 vulnerability、3-tool比較は従来のfit判定を維持した。
+
+### 2026-07-29T05:18:00Z — current release selection repair
+
+- Public statusはmain CI成功、Issue／PR 0件、`v0.1.2`の4 platform archive＋`SHA256SUMS`完備を示す一方、READMEのcopy-ready install、release URL、archive名、Action pinは旧`v0.1.1`のままだった。
+- Source install、release download、checksum例を`v0.1.2`へ、Action例をそのreleaseを生成したverified public main `c882d1f0c677d187911de2580d488f9841af1d2d`へ更新した。
+- Publisher contractは旧`v0.1.0`／`v0.1.1` installとrelease URL、またはAction pinのdriftを拒否し、次回release後に同じ選定摩擦を見逃さない。
