@@ -15,6 +15,9 @@ clean_output=$(env \
   MSP_INPUT_WORKING_DIRECTORY="$project_root" \
   MSP_INPUT_TIMEOUT=5s \
   MSP_INPUT_CLEANUP_GRACE=250ms \
+  MSP_INPUT_MAX_LINE_BYTES=4096 \
+  MSP_INPUT_MAX_STDOUT_BYTES=65536 \
+  MSP_INPUT_MAX_DIAGNOSTICS=7 \
   MSP_INPUT_ARGUMENTS='run
 ./examples/fixture-server
 --mode
@@ -22,6 +25,9 @@ clean' \
   MSP_INPUT_FORMAT=json \
   "$project_root/scripts/action.sh")
 printf '%s' "$clean_output" | grep -q '"status": "passed"'
+printf '%s' "$clean_output" | grep -q '"maxLineBytes": 4096'
+printf '%s' "$clean_output" | grep -q '"maxStdoutBytes": 65536'
+printf '%s' "$clean_output" | grep -q '"maxDiagnostics": 7'
 
 set +e
 dirty_output=$(env \
@@ -54,6 +60,9 @@ invalid_output=$(env \
   MSP_INPUT_WORKING_DIRECTORY="$project_root" \
   MSP_INPUT_TIMEOUT=0s \
   MSP_INPUT_CLEANUP_GRACE=250ms \
+  MSP_INPUT_MAX_LINE_BYTES=4096 \
+  MSP_INPUT_MAX_STDOUT_BYTES=65536 \
+  MSP_INPUT_MAX_DIAGNOSTICS=7 \
   MSP_INPUT_ARGUMENTS='run
 ./examples/fixture-server
 --mode

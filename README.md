@@ -138,9 +138,12 @@ The composite Action builds and runs this repository's checker without downloadi
     command: node
     arguments: |-
       ./dist/server.js
+    max-line-bytes: 1048576
+    max-stdout-bytes: 16777216
+    max-diagnostics: 20
 ```
 
-`arguments` is one literal argument per line, so no shell evaluates the server command. The Action propagates checker exit codes and accepts optional `working-directory`, `timeout`, `cleanup-grace`, and `format` inputs. If `working-directory` is missing or is not a directory, the Action returns a content-safe error with exit code `2` before building or starting the server.
+`arguments` is one literal argument per line, so no shell evaluates the server command. The Action propagates checker exit codes and accepts optional `working-directory`, `timeout`, `cleanup-grace`, `max-line-bytes`, `max-stdout-bytes`, `max-diagnostics`, and `format` inputs. These three size/count inputs use the same fail-closed bounds as the CLI. If `working-directory` is missing or is not a directory, the Action returns a content-safe error with exit code `2` before building or starting the server.
 
 ## Release archives
 

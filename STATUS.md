@@ -205,6 +205,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 
 ## Maintenance
 
+### 2026-08-08T22:05:00Z — Action output-safety limit parity
+
+- The CLI already failed closed on per-record bytes, total stdout bytes, and reported diagnostic count, but the composite Action exposed only timeout and cleanup-grace. This made CI callers unable to keep the reviewed CLI safety boundary while using the Action.
+- Added `max-line-bytes`, `max-stdout-bytes`, and `max-diagnostics` Action inputs. The shell-free Action now forwards them as literal CLI arguments, and Action smoke asserts the effective JSON limits without exposing command or path data.
+- Updated the copy-ready Action documentation and changelog. `go test ./...`, `go vet ./...`, race-enabled quality gate, ShellCheck, Action smoke, publisher contract, release package checks, and clean-checkout quickstart passed; no runtime dependency or support-matrix expansion was introduced.
+
 ### 2026-08-08T15:53:00Z — release repair input guard
 
 - Added a non-empty `TAG_NAME` guard before release packaging and a matching workflow regression assertion. Manual and `repository_dispatch` repairs now fail closed before generating assets when their required tag input is absent.

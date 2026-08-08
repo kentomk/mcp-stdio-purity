@@ -22,6 +22,18 @@ inputs:
     description: Time to observe descendant cleanup output
     required: false
     default: 250ms
+  max-line-bytes:
+    description: Maximum stdout record size
+    required: false
+    default: 1048576
+  max-stdout-bytes:
+    description: Maximum total stdout size
+    required: false
+    default: 16777216
+  max-diagnostics:
+    description: Maximum reported purity diagnostics
+    required: false
+    default: '20'
   format:
     description: Report format (text or json)
     required: false
@@ -43,6 +55,9 @@ runs:
         MSP_INPUT_WORKING_DIRECTORY: ${{ inputs.working-directory }}
         MSP_INPUT_TIMEOUT: ${{ inputs.timeout }}
         MSP_INPUT_CLEANUP_GRACE: ${{ inputs.cleanup-grace }}
+        MSP_INPUT_MAX_LINE_BYTES: ${{ inputs.max-line-bytes }}
+        MSP_INPUT_MAX_STDOUT_BYTES: ${{ inputs.max-stdout-bytes }}
+        MSP_INPUT_MAX_DIAGNOSTICS: ${{ inputs.max-diagnostics }}
         MSP_INPUT_FORMAT: ${{ inputs.format }}
       run: "$GITHUB_ACTION_PATH/scripts/action.sh"
 

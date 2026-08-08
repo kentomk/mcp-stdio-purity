@@ -7,6 +7,9 @@ working_directory=${MSP_INPUT_WORKING_DIRECTORY:-.}
 format=${MSP_INPUT_FORMAT:-text}
 timeout=${MSP_INPUT_TIMEOUT:-10s}
 cleanup_grace=${MSP_INPUT_CLEANUP_GRACE:-250ms}
+max_line_bytes=${MSP_INPUT_MAX_LINE_BYTES:-1048576}
+max_stdout_bytes=${MSP_INPUT_MAX_STDOUT_BYTES:-16777216}
+max_diagnostics=${MSP_INPUT_MAX_DIAGNOSTICS:-20}
 
 temp_root=${RUNNER_TEMP:-${TMPDIR:-/tmp}}
 mkdir -p "$temp_root"
@@ -30,7 +33,9 @@ arguments_file=$build_root/arguments
 (cd "$action_path" && go build -trimpath -o "$binary" ./cmd/mcp-stdio-purity)
 printf '%s' "${MSP_INPUT_ARGUMENTS:-}" > "$arguments_file"
 
-set -- check --format "$format" --timeout "$timeout" --cleanup-grace "$cleanup_grace" -- "$command"
+set -- check --format "$format" --timeout "$timeout" --cleanup-grace "$cleanup_grace" \
+  --max-line-bytes "$max_line_bytes" --max-stdout-bytes "$max_stdout_bytes" \
+  --max-diagnostics "$max_diagnostics" -- "$command"
 if [ -s "$arguments_file" ]; then
   while IFS= read -r argument || [ -n "$argument" ]; do
     set -- "$@" "$argument"
