@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Align source-install, archive, checksum, release URL, and composite Action examples with the published `v0.1.3` release and its current public main revision.
 - Pin the copy-ready composite Action example to the current successful public main and reject the superseded revision in the publisher contract.
 - Fail closed when a manual or broker-triggered release repair omits the required tag name before packaging assets.
 - Pin the composite Action's source build to Go `1.26.5`, matching CI and
