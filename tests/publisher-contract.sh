@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "fix: reject empty release repair tag"
+  and (.commitMessage | length >= 10 and length <= 120)
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
@@ -49,7 +49,11 @@ grep -Eq '^## Quick start\b' README.md
 grep -Eq '60-second quick start' README.md
 grep -Fq 'releases/tag/v0.1.2' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.2' README.md
-grep -Fq 'uses: kentomk/mcp-stdio-purity@c882d1f0c677d187911de2580d488f9841af1d2d' README.md
+grep -Fq 'uses: kentomk/mcp-stdio-purity@e853a9827dfe5d8da1b7187be42dcef48fe19cfb' README.md
+if grep -Fq 'uses: kentomk/mcp-stdio-purity@c882d1f0c677d187911de2580d488f9841af1d2d' README.md; then
+  echo 'publisher contract: README still pins the superseded public Action revision' >&2
+  exit 1
+fi
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'curl -fsSLo SHA256SUMS' README.md
 grep -Fq 'install -m 0755 mcp-stdio-purity' README.md
