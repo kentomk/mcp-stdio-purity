@@ -4,6 +4,9 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Return a content-safe JSON or text exit `2` before building when the Action's
+  `working-directory` is missing or is not a directory, with regression coverage
+  that prevents the path from leaking into output.
 - Add a copy-ready failure-triage path that separates stdout purity violations
   (exit `1`) from operational failures (exit `2`) without exposing payloads.
 - Point source installs, release downloads, and the composite Action example to

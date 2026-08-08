@@ -123,7 +123,7 @@ The composite Action builds and runs this repository's checker without downloadi
       ./dist/server.js
 ```
 
-`arguments` is one literal argument per line, so no shell evaluates the server command. The Action propagates checker exit codes and accepts optional `working-directory`, `timeout`, `cleanup-grace`, and `format` inputs.
+`arguments` is one literal argument per line, so no shell evaluates the server command. The Action propagates checker exit codes and accepts optional `working-directory`, `timeout`, `cleanup-grace`, and `format` inputs. If `working-directory` is missing or is not a directory, the Action returns a content-safe error with exit code `2` before building or starting the server.
 
 ## Release archives
 

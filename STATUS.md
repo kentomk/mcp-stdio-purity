@@ -205,6 +205,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 
 ## Maintenance
 
+### 2026-08-08T08:10:00Z — Action working-directory failure boundary repair
+
+- Current broker status remained healthy: public main CI succeeded, the maintainer inbox was empty, and the `v0.1.2` release retained all five assets.
+- The composite Action now checks `working-directory` before building or starting the server. A missing or non-directory path returns a content-safe text or JSON error with exit `2`, rather than exposing the runner path through shell `cd` failure.
+- Action smoke coverage fixes the exit code, JSON contract, path non-disclosure, and cleanup behavior. The README and changelog document the boundary; aggregate trial remains non-adoption evidence.
+
 ### 2026-08-08T06:25:30Z — published security policy alignment
 
 - Broker status confirmed public main `3d7235acbe954bcee724cc15d0a091c025ceda52` with successful CI, no open Issue/PR, and complete v0.1.2 release assets.

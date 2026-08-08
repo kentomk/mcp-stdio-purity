@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "docs: align security policy with published release"
+  and .commitMessage == "fix: fail safely on missing Action working directory"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '

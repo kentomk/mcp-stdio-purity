@@ -16,6 +16,15 @@ cleanup() {
 }
 trap cleanup EXIT HUP INT TERM
 
+if [ ! -d "$working_directory" ]; then
+  if [ "$format" = json ]; then
+    printf '%s\n' '{"schemaVersion":1,"status":"error","error":"working directory is not a directory"}'
+  else
+    printf '%s\n' 'error: working directory is not a directory'
+  fi
+  exit 2
+fi
+
 binary=$build_root/mcp-stdio-purity
 arguments_file=$build_root/arguments
 (cd "$action_path" && go build -trimpath -o "$binary" ./cmd/mcp-stdio-purity)
