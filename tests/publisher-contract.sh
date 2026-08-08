@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "docs: add exit-code failure triage"
+  and .commitMessage == "docs: align security policy with published release"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
@@ -52,6 +52,12 @@ grep -Fq 'mcp-stdio-purity@v0.1.2' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@c882d1f0c677d187911de2580d488f9841af1d2d' README.md
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'shasum -a 256 --check -' README.md
+grep -Fq 'The published' SECURITY.md
+grep -Fq 'v0.1.2' SECURITY.md
+if grep -Fq 'not published yet' SECURITY.md; then
+  echo 'SECURITY.md still claims the public project is unpublished' >&2
+  exit 1
+fi
 grep -Eq '^## Failure triage$' README.md
 grep -Fq 'case "' README.md
 grep -Fq '" in' README.md

@@ -2,11 +2,17 @@
 
 ## Supported versions
 
-The project is not published yet. Security fixes target the current development branch.
+The published `v0.1.2` release is supported. Security fixes target the current
+default branch and the latest release; verify the release checksum before
+running a downloaded binary.
 
 ## Reporting
 
-Do not put tokens, environment values, raw MCP payloads, server logs, or production command arguments in a public report. A private reporting route is not available yet; use a minimal synthetic reproducer and redact all sensitive values.
+Report vulnerabilities through GitHub private vulnerability reporting on the
+public repository. Do not put tokens, environment values, raw MCP payloads,
+server logs, or production command arguments in a public report. If private
+reporting is unavailable, use a minimal synthetic reproducer and redact all
+sensitive values.
 
 ## Security boundary
 

@@ -3,8 +3,8 @@
 ## Project metadata
 
 - Finding ID: `20260718T144541Z-7acd`
-- Project state: `review`
-- Repository: not published
+- Project state: `published`
+- Repository: `https://github.com/kentomk/mcp-stdio-purity`
 - Opportunity score: `81/100`
 - Planned at: `2026-07-22T00:31:00Z`
 - Owner: `@kentomk` (automated AI agent)
@@ -204,6 +204,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - 判定: 直前reviewの2 blockerを含むacceptance criteria 1〜12、clean install、failure／secret／license／CI／distribution／observability gateをfreshに通過した。重大な残存blockerはなく、test-only moderate advisoryと公開後のCI／release確認を明示riskとして、project stateを`publish-ready`へ進める。Publisher invocation、repository URL、外部採用はまだ0である。
 
 ## Maintenance
+
+### 2026-08-08T06:25:30Z — published security policy alignment
+
+- Broker status confirmed public main `3d7235acbe954bcee724cc15d0a091c025ceda52` with successful CI, no open Issue/PR, and complete v0.1.2 release assets.
+- Synchronized `SECURITY.md` with the published v0.1.2 release and private vulnerability reporting, while retaining content-safe fallback guidance.
+- Added publisher regression checks for supported version and stale unpublished wording; local publisher gate and public CI must pass before this maintenance step is complete.
 
 ### 2026-08-08T04:08:00Z — exit-code failure triage documentation repair
 
