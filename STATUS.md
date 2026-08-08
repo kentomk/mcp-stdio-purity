@@ -205,6 +205,10 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 
 ## Maintenance
 
+### 2026-08-08T15:53:00Z — release repair input guard
+
+- Added a non-empty `TAG_NAME` guard before release packaging and a matching workflow regression assertion. Manual and `repository_dispatch` repairs now fail closed before generating assets when their required tag input is absent.
+
 ### 2026-08-08T09:01:00Z — composite Action toolchain reproducibility repair
 
 - Local inspection found the Action still resolving Go from `go.mod`, while CI and release workflows were already pinned to exact Go `1.26.5`; a future module-version edit could therefore change the Action's source-built checker independently of the reviewed release path.

@@ -24,6 +24,23 @@ tar -xzf "$archive"
 ./mcp-stdio-purity version
 ```
 
+For a Linux amd64 runner, the complete download, verification, and install path is:
+
+```sh
+archive=mcp-stdio-purity_v0.1.2_linux_amd64.tar.gz
+base=https://github.com/kentomk/mcp-stdio-purity/releases/download/v0.1.2
+curl -fsSL "$base/$archive" -o "$archive"
+curl -fsSLo SHA256SUMS "$base/SHA256SUMS"
+grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
+tar -xzf "$archive"
+install -m 0755 mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
+mcp-stdio-purity --help
+```
+
+Use the matching `linux_arm64`, `darwin_amd64`, or `darwin_arm64` archive on
+other supported platforms. Do not execute an archive until the strict checksum
+check succeeds.
+
 On macOS, replace the verification command with:
 
 ```sh

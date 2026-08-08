@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "test: align publisher request subject"
+  and .commitMessage == "fix: reject empty release repair tag"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
@@ -51,6 +51,8 @@ grep -Fq 'releases/tag/v0.1.2' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.2' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@c882d1f0c677d187911de2580d488f9841af1d2d' README.md
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
+grep -Fq 'curl -fsSLo SHA256SUMS' README.md
+grep -Fq 'install -m 0755 mcp-stdio-purity' README.md
 grep -Fq 'shasum -a 256 --check -' README.md
 grep -Fq 'The published' SECURITY.md
 grep -Fq 'v0.1.2' SECURITY.md

@@ -33,6 +33,7 @@ jobs:
           TAG_NAME: ${{ github.event.release.tag_name || inputs.tagName || github.event.client_payload.tagName }}
         run: |
           set -eu
+          test -n "$TAG_NAME"
           SOURCE_DATE_EPOCH="$(git show -s --format=%ct HEAD)"
           export SOURCE_DATE_EPOCH
           scripts/package-release.sh "$TAG_NAME" dist

@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Fail closed when a manual or broker-triggered release repair omits the required tag name before packaging assets.
 - Pin the composite Action's source build to Go `1.26.5`, matching CI and
   release workflows, and add a regression against mutable `go-version-file`
   resolution.

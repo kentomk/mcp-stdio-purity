@@ -11,6 +11,7 @@ grep -Fq 'required: true' "$workflow"
 grep -Fq "ref: \${{ github.event.release.tag_name || inputs.tagName || github.event.client_payload.tagName }}" "$workflow"
 # shellcheck disable=SC2016
 [ "$(grep -Fc 'TAG_NAME: ${{ github.event.release.tag_name || inputs.tagName || github.event.client_payload.tagName }}' "$workflow")" -eq 2 ]
+grep -Fq "test -n \"\$TAG_NAME\"" "$workflow"
 grep -Fq 'contents: write' "$workflow"
 grep -Fq "go-version: '1.26.5'" "$workflow"
 if grep -Fq "go-version: '1.26.x'" "$workflow"; then
