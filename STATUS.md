@@ -205,6 +205,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 
 ## Maintenance
 
+### 2026-08-08T09:01:00Z — composite Action toolchain reproducibility repair
+
+- Local inspection found the Action still resolving Go from `go.mod`, while CI and release workflows were already pinned to exact Go `1.26.5`; a future module-version edit could therefore change the Action's source-built checker independently of the reviewed release path.
+- The Action now pins Go `1.26.5` directly, README explains the shared toolchain contract, and the publisher contract rejects `go-version-file` in the Action while requiring the exact patch.
+- Focused tests and the full publisher gate must pass before broker publication; current external adoption remains trial-only and does not justify feature expansion.
+
 ### 2026-08-08T08:10:00Z — Action working-directory failure boundary repair
 
 - Current broker status remained healthy: public main CI succeeded, the maintainer inbox was empty, and the `v0.1.2` release retained all five assets.

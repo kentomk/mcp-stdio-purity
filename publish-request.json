@@ -73,5 +73,5 @@
   "differentiation": "A shell-free, content-safe preflight that owns raw stdout through bounded descendant cleanup and fails on every non-JSON-RPC record without emulating a full MCP client.",
   "testCommand": "scripts/publisher-gate.sh",
   "license": "MIT",
-  "commitMessage": "fix: fail safely on missing Action working directory"
+  "commitMessage": "test: align publisher request subject"
 }

@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "fix: fail safely on missing Action working directory"
+  and .commitMessage == "test: align publisher request subject"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
@@ -75,6 +75,11 @@ grep -Eq 'uses: actions/checkout@[0-9a-f]{40}([[:space:]]|$)' .github/workflows/
 grep -Eq 'uses: actions/setup-go@[0-9a-f]{40}([[:space:]]|$)' .github/workflows/ci.yml
 if grep -Eq 'uses: actions/(checkout|setup-go)@v[0-9]' .github/workflows/*.yml action.yml; then
   echo 'mutable GitHub Action reference found' >&2
+  exit 1
+fi
+grep -Fq "go-version: '1.26.5'" action.yml
+if grep -Fq 'go-version-file:' action.yml; then
+  echo 'composite Action must use the reviewed exact Go patch' >&2
   exit 1
 fi
 

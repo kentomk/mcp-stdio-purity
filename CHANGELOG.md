@@ -4,6 +4,9 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Pin the composite Action's source build to Go `1.26.5`, matching CI and
+  release workflows, and add a regression against mutable `go-version-file`
+  resolution.
 - Return a content-safe JSON or text exit `2` before building when the Action's
   `working-directory` is missing or is not a directory, with regression coverage
   that prevents the path from leaking into output.
