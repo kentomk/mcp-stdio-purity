@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Fix the copy-ready archive install example to use the extracted directory and create the user binary directory in a fresh home.
 - Expose the CLI's stdout line, total-output, and diagnostic-count safety limits through the composite Action, with smoke coverage for exact forwarding.
 - Align source-install, archive, checksum, release URL, and composite Action examples with the published `v0.1.3` release and its current public main revision.
 - Pin the copy-ready composite Action example to the current successful public main and reject the superseded revision in the publisher contract.

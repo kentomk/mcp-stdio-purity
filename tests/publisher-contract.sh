@@ -56,7 +56,9 @@ if grep -Fq 'uses: kentomk/mcp-stdio-purity@e853a9827dfe5d8da1b7187be42dcef48fe1
 fi
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'curl -fsSLo SHA256SUMS' README.md
-grep -Fq 'install -m 0755 mcp-stdio-purity' README.md
+grep -Fq "mkdir -p \"\$HOME/.local/bin\"" README.md
+grep -Fq 'install -m 0755 mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity' README.md
+grep -Fq './mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity version' README.md
 grep -Fq 'shasum -a 256 --check -' README.md
 grep -Fq 'The published' SECURITY.md
 grep -Fq 'v0.1.3' SECURITY.md

@@ -21,7 +21,7 @@ all four platform archives to be present.
 archive=mcp-stdio-purity_v0.1.3_linux_amd64.tar.gz
 grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
 tar -xzf "$archive"
-./mcp-stdio-purity version
+./mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity version
 ```
 
 For a Linux amd64 runner, the complete download, verification, and install path is:
@@ -33,7 +33,8 @@ curl -fsSL "$base/$archive" -o "$archive"
 curl -fsSLo SHA256SUMS "$base/SHA256SUMS"
 grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
 tar -xzf "$archive"
-install -m 0755 mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
+mkdir -p "$HOME/.local/bin"
+install -m 0755 mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
 mcp-stdio-purity --help
 ```
 
