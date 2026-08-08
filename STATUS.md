@@ -252,3 +252,8 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 - Public statusはmain CI成功、Issue／PR 0件、`v0.1.2`の4 platform archive＋`SHA256SUMS`完備を示す一方、READMEのcopy-ready install、release URL、archive名、Action pinは旧`v0.1.1`のままだった。
 - Source install、release download、checksum例を`v0.1.2`へ、Action例をそのreleaseを生成したverified public main `c882d1f0c677d187911de2580d488f9841af1d2d`へ更新した。
 - Publisher contractは旧`v0.1.0`／`v0.1.1` installとrelease URL、またはAction pinのdriftを拒否し、次回release後に同じ選定摩擦を見逃さない。
+
+### 2026-08-08T19:23:00Z — current Action revision alignment
+
+- Broker status showed public main `563d134da1ba7e52942820d5c816951acc4e428a` with successful CI, while the README Action example still referenced older public-main commit `c9163f45d5d08838d89c67829ec994e540377d06`.
+- Synchronized the copy-ready immutable Action pin and publisher regression to the broker-verified current main. This changes distribution trust documentation only; the CLI contract and runtime behavior are unchanged.
