@@ -34,7 +34,7 @@ jq -e '
   and (.differentiation | type == "string" and length >= 20)
   and .testCommand == "scripts/publisher-gate.sh"
   and .license == "MIT"
-  and .commitMessage == "docs: point installs to v0.1.2"
+  and .commitMessage == "docs: add exit-code failure triage"
 ' publish-request.json >/dev/null
 
 jq -e --slurpfile request publish-request.json '
@@ -52,6 +52,11 @@ grep -Fq 'mcp-stdio-purity@v0.1.2' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@c882d1f0c677d187911de2580d488f9841af1d2d' README.md
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'shasum -a 256 --check -' README.md
+grep -Eq '^## Failure triage$' README.md
+grep -Fq 'case "' README.md
+grep -Fq '" in' README.md
+grep -Fq 'For exit' README.md
+grep -Fq 'diagnostics' README.md
 if grep -Eq 'After the first release|FULL_COMMIT_SHA|mcp-stdio-purity@v0\.1\.[01]|releases/tag/v0\.1\.[01]' README.md; then
   echo 'README contains a stale pre-publication or prior-release install path' >&2
   exit 1

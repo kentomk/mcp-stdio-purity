@@ -83,6 +83,28 @@ mcp-stdio-purity check --timeout 10s --cleanup-grace 250ms \
 
 If a purity violation and an operational failure coexist, exit `1` wins so CI does not lose the contract failure.
 
+## Failure triage
+
+Use the exit code to choose the next check before changing the server:
+
+```sh
+mcp-stdio-purity check --format json -- node ./dist/server.js >mcp-report.json
+status=$?
+case "$status" in
+  0) echo 'stdout is JSON-RPC pure' ;;
+  1) echo 'route the reported stdout log or child output to stderr' ;;
+  2) echo 'check command availability, initialize/probe responses, timeout, and resource limits' ;;
+esac
+exit "$status"
+```
+
+For exit `1`, inspect `diagnostics` in `mcp-report.json`; the report includes the
+phase and byte position but never copies the offending payload. For exit `2`,
+rerun with `--format text` and verify the command directly with the same
+environment and working directory. Increase `--timeout`, `--cleanup-grace`, or
+the output limits only when the server's expected lifecycle requires it; these
+limits are safety bounds, not a substitute for fixing an unbounded server.
+
 ## Output safety
 
 Reports contain only the violation reason, lifecycle phase, line number, byte offset, and byte count. They do not include stdout payloads, hashes, environment values, stderr, or command arguments. The report identifies the command by basename only.

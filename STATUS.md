@@ -205,6 +205,12 @@ Views、stars、watchersはawareness、unique clones／release downloadsはtrial
 
 ## Maintenance
 
+### 2026-08-08T04:08:00Z — exit-code failure triage documentation repair
+
+- Fresh release-status確認ではmain CI success、open Issue／PR 0件、v0.1.2の5 asset完備だった。11秒のclean quickstartと、invalid timeoutのexit `2`を実機で再確認した。
+- READMEへ、purity violationのexit `1`とspawn／lifecycle／timeout／resource failureのexit `2`を分けるcopy-ready JSON triageを追加した。diagnosticがpayloadを転載しないことと、安全上limitを安易に緩めない境界も明記した。
+- `tests/publisher-contract.sh`へfailure triage見出し、exit分岐、payload-safe診断説明のregressionを追加し、`go test ./...`、`go vet ./...`、publisher contract、clean quickstart、publisher gateを通過させる。
+
 ### 2026-07-23T14:20:00Z — CLI help discovery repair
 
 - Clean local実行でtop-level `--help`がusageをstderrへ出してexit `2`となり、利用者とagentがcommand contractを安全に探索できない導入funnel障害を再現した。

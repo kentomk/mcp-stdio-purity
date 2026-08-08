@@ -4,6 +4,8 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Add a copy-ready failure-triage path that separates stdout purity violations
+  (exit `1`) from operational failures (exit `2`) without exposing payloads.
 - Point source installs, release downloads, and the composite Action example to
   the current verified `v0.1.2` release and its immutable public main revision.
 - Repair the published install path to use `v0.1.1`, an immutable Action
