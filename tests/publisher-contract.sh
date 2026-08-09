@@ -49,7 +49,7 @@ grep -Eq '^## Quick start\b' README.md
 grep -Eq '60-second quick start' README.md
 grep -Fq 'releases/tag/v0.1.3' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.3' README.md
-grep -Fq 'uses: kentomk/mcp-stdio-purity@bed0b6766d332cda9d7dcc7f4476112765c0cd48' README.md
+grep -Fq 'uses: kentomk/mcp-stdio-purity@879f73a278f28479e2191b7f9c43a99eb35b9c4' README.md
 if grep -Fq 'uses: kentomk/mcp-stdio-purity@563d134da1ba7e52942820d5c816951acc4e428a' README.md; then
   echo 'publisher contract: README still pins the superseded public Action revision' >&2
   exit 1

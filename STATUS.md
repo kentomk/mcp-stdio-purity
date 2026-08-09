@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T19:10:00Z — published Action revision alignment
+
+- Broker status confirmed public main `879f73a278f28479e2191b7f9c43a99eb35b9c4` with successful CI and complete `v0.1.3` release assets, while the README copy-ready Action example still pinned the superseded `bed0b6766d332cda9d7dcc7f4476112765c0cd48` revision.
+- Updated the English Action example and publisher regression to the broker-verified public main. Runtime behavior, release contents, and adoption claims are unchanged.
+
 ### 2026-08-09T16:20:00Z — problem-first qualification guidance
 
 - README first screen now states the exact stdout-purity failure contexts where the checker fits and separates them from protocol validation, client compatibility, and sandboxing use cases.
