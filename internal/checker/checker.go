@@ -305,35 +305,47 @@ func readStream(r io.Reader, maxLine, maxTotal int, out chan<- streamEvent) {
 	line := 0
 	var offset int64
 	total := 0
+	capacity := 64 * 1024
+	if maxLine < capacity {
+		capacity = maxLine
+	}
+	pending := make([]byte, 0, capacity)
 	for {
-		data, err := reader.ReadBytes('\n')
-		if len(data) > 0 {
+		fragment, err := reader.ReadSlice('\n')
+		if len(fragment) > 0 {
 			line++
-			total += len(data)
-			if len(data) > maxLine {
+			if len(pending)+len(fragment) > maxLine {
 				out <- streamEvent{err: errors.New("stdout line limit exceeded"), eof: true}
 				return
 			}
-			if total > maxTotal {
+			if total+len(fragment) > maxTotal {
 				out <- streamEvent{err: errors.New("stdout total limit exceeded"), eof: true}
 				return
 			}
-			unterminated := err == io.EOF && data[len(data)-1] != '\n'
-			content := data
-			if content[len(content)-1] == '\n' {
-				content = content[:len(content)-1]
-			}
-			out <- streamEvent{record: &record{data: content, line: line, offset: offset, unterminated: unterminated}}
-			offset += int64(len(data))
+			pending = append(pending, fragment...)
+			total += len(fragment)
 		}
-		if err != nil {
-			if err == io.EOF {
-				out <- streamEvent{eof: true}
-			} else {
-				out <- streamEvent{err: errors.New("read server stdout"), eof: true}
+		if err == nil {
+			content := append([]byte(nil), pending[:len(pending)-1]...)
+			out <- streamEvent{record: &record{data: content, line: line, offset: offset}}
+			offset += int64(len(pending))
+			pending = pending[:0]
+			continue
+		}
+		if errors.Is(err, bufio.ErrBufferFull) {
+			continue
+		}
+		if err == io.EOF {
+			if len(pending) > 0 {
+				content := append([]byte(nil), pending...)
+				out <- streamEvent{record: &record{data: content, line: line, offset: offset, unterminated: true}}
+				offset += int64(len(pending))
 			}
+			out <- streamEvent{eof: true}
 			return
 		}
+		out <- streamEvent{err: errors.New("read server stdout"), eof: true}
+		return
 	}
 }
 

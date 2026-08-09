@@ -74,6 +74,7 @@ func TestRunFixtures(t *testing.T) {
 		{mode: "cleanup-child", wantStatus: "violations", wantReason: "invalid-json", wantPhase: "cleanup"},
 		{mode: "many-invalid", wantStatus: "violations", wantReason: "invalid-json", wantCount: 20, wantPhase: "initialize"},
 		{mode: "oversize", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64 }},
+		{mode: "oversize-unterminated", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64 }},
 		{mode: "total-limit", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64; config.MaxStdoutBytes = 100 }},
 		{mode: "hung", wantStatus: "error", configure: func(config *Config) { config.Timeout = 200 * time.Millisecond }},
 		{mode: "cleanup-hold", wantStatus: "error", configure: func(config *Config) { config.CleanupGrace = 100 * time.Millisecond }},
@@ -162,6 +163,9 @@ func TestHelperProcess(t *testing.T) {
 	}
 	if mode == "oversize" {
 		fmt.Println(strings.Repeat("X", 128))
+	}
+	if mode == "oversize-unterminated" {
+		fmt.Print(strings.Repeat("X", 128))
 	}
 	if mode == "total-limit" {
 		for range 4 {

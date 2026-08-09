@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T08:33:00Z — incremental stdout bound enforcement
+
+- Replaced unbounded `ReadBytes` line buffering with incremental `ReadSlice` accumulation that fails at `max-line-bytes` or `max-stdout-bytes`, including unterminated records.
+- Added a no-newline oversized fixture regression and documented the bounded-read guarantee. Protocol scope, server execution boundary, and output redaction remain unchanged.
+
 ### 2026-08-09T06:34:00Z — current Action revision alignment
 
 - Broker status showed public main `0f14ef5685ac3f67ab0affa691191af9721d7d5f` with successful CI, while the README Action example still referenced superseded public main `b7721b9bc8bdcceacf8ce75d075ca3fb92ed1911`.

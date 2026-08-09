@@ -161,7 +161,7 @@ macOS. Source install remains available with
 
 ## Current scope
 
-The checker detects invalid UTF-8, invalid JSON, non-JSON-RPC envelopes, and unterminated stdout records. It accepts server-initiated JSON-RPC requests, notifications, success responses, and error responses. Synthetic tests cover startup, late, post-response, and descendant cleanup contamination, plus timeout and bounded-output failures.
+The checker detects invalid UTF-8, invalid JSON, non-JSON-RPC envelopes, and unterminated stdout records. It reads stdout incrementally and stops at the configured line or total-output bound even when a producer never emits a newline. It accepts server-initiated JSON-RPC requests, notifications, success responses, and error responses. Synthetic tests cover startup, late, post-response, and descendant cleanup contamination, plus timeout and bounded-output failures.
 
 The review gate pins the Inspector CLI 1.0.1, mcp-compliance 0.16.3, and
 mcp-z 1.0.5 in an isolated npm fixture. All three accept the clean control and
