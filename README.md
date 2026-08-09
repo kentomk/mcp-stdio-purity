@@ -18,35 +18,35 @@ server's own integration tests for those checks.
 
 ## Installation
 
-Install the published `v0.1.3` source release with Go 1.26 or later:
+Install the published `v0.1.4` source release with Go 1.26 or later:
 
 ```sh
-go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.3
+go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.4
 ```
 
 Alternatively, download the matching archive and `SHA256SUMS` from the
-[`v0.1.3` release](https://github.com/kentomk/mcp-stdio-purity/releases/tag/v0.1.3).
+[`v0.1.4` release](https://github.com/kentomk/mcp-stdio-purity/releases/tag/v0.1.4).
 Verify only the archive you downloaded; checking the whole manifest requires
 all four platform archives to be present.
 
 ```sh
-archive=mcp-stdio-purity_v0.1.3_linux_amd64.tar.gz
+archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
 grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
 tar -xzf "$archive"
-./mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity version
+./mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity version
 ```
 
 For a Linux amd64 runner, the complete download, verification, and install path is:
 
 ```sh
-archive=mcp-stdio-purity_v0.1.3_linux_amd64.tar.gz
-base=https://github.com/kentomk/mcp-stdio-purity/releases/download/v0.1.3
+archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
+base=https://github.com/kentomk/mcp-stdio-purity/releases/download/v0.1.4
 curl -fsSL "$base/$archive" -o "$archive"
 curl -fsSLo SHA256SUMS "$base/SHA256SUMS"
 grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
 tar -xzf "$archive"
 mkdir -p "$HOME/.local/bin"
-install -m 0755 mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
+install -m 0755 mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
 mcp-stdio-purity --help
 ```
 
@@ -147,10 +147,10 @@ The tool itself has no network client or telemetry. The server command receives 
 
 ## GitHub Action
 
-The composite Action builds and runs this repository's checker without downloading a separate binary or package. It uses the same exact Go `1.26.5` patch as CI and release builds; pin it to the reviewed public main commit for `v0.1.3`:
+The composite Action builds and runs this repository's checker without downloading a separate binary or package. It uses the same exact Go `1.26.5` patch as CI and release builds; pin it to the reviewed public main commit for `v0.1.4`:
 
 ```yaml
-- uses: kentomk/mcp-stdio-purity@2d127c546321682b175d4ced66bc47abe10c417e
+- uses: kentomk/mcp-stdio-purity@5986bf7eb178840f6370424a27ad64b817542b46
   with:
     command: node
     arguments: |-
@@ -167,13 +167,13 @@ The composite Action builds and runs this repository's checker without downloadi
 Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. Each archive contains only `mcp-stdio-purity` and `LICENSE`. Verify a single downloaded archive without requiring the other platform archives:
 
 ```sh
-archive=mcp-stdio-purity_v0.1.3_linux_amd64.tar.gz
+archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
 grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
 ```
 
 Use `shasum -a 256 --check -` instead of `sha256sum --check --strict -` on
 macOS. Source install remains available with
-`go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.3`.
+`go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.4`.
 
 ## Current scope
 

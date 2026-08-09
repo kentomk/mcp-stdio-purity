@@ -47,9 +47,9 @@ jq -e --slurpfile request publish-request.json '
 grep -Eq '^## Installation\b' README.md
 grep -Eq '^## Quick start\b' README.md
 grep -Eq '60-second quick start' README.md
-grep -Fq 'releases/tag/v0.1.3' README.md
-grep -Fq 'mcp-stdio-purity@v0.1.3' README.md
-grep -Fq 'uses: kentomk/mcp-stdio-purity@2d127c546321682b175d4ced66bc47abe10c417e' README.md
+grep -Fq 'releases/tag/v0.1.4' README.md
+grep -Fq 'mcp-stdio-purity@v0.1.4' README.md
+grep -Fq 'uses: kentomk/mcp-stdio-purity@5986bf7eb178840f6370424a27ad64b817542b46' README.md
 if grep -Fq 'uses: kentomk/mcp-stdio-purity@563d134da1ba7e52942820d5c816951acc4e428a' README.md; then
   echo 'publisher contract: README still pins the superseded public Action revision' >&2
   exit 1
@@ -61,11 +61,11 @@ fi
 grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'curl -fsSLo SHA256SUMS' README.md
 grep -Fq "mkdir -p \"\$HOME/.local/bin\"" README.md
-grep -Fq 'install -m 0755 mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity' README.md
-grep -Fq './mcp-stdio-purity_v0.1.3_linux_amd64/mcp-stdio-purity version' README.md
+grep -Fq 'install -m 0755 mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity' README.md
+grep -Fq './mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity version' README.md
 grep -Fq 'shasum -a 256 --check -' README.md
 grep -Fq 'The published' SECURITY.md
-grep -Fq 'v0.1.3' SECURITY.md
+grep -Fq 'v0.1.4' SECURITY.md
 if grep -Fq 'not published yet' SECURITY.md; then
   echo 'SECURITY.md still claims the public project is unpublished' >&2
   exit 1

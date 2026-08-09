@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Align source-install, archive, checksum, security, and composite Action examples with the published `v0.1.4` release and current public main.
 - Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
 - Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
 - Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
