@@ -61,13 +61,14 @@ type Diagnostic struct {
 }
 
 type Report struct {
-	SchemaVersion int          `json:"schemaVersion"`
-	ToolVersion   string       `json:"toolVersion"`
-	Command       string       `json:"command"`
-	Status        string       `json:"status"`
-	Lifecycle     Lifecycle    `json:"lifecycle"`
-	Limits        Limits       `json:"limits"`
-	Diagnostics   []Diagnostic `json:"diagnostics"`
+	SchemaVersion        int          `json:"schemaVersion"`
+	ToolVersion          string       `json:"toolVersion"`
+	Command              string       `json:"command"`
+	Status               string       `json:"status"`
+	Lifecycle            Lifecycle    `json:"lifecycle"`
+	Limits               Limits       `json:"limits"`
+	Diagnostics          []Diagnostic `json:"diagnostics"`
+	DiagnosticsTruncated bool         `json:"diagnosticsTruncated"`
 }
 
 type record struct {
@@ -147,8 +148,12 @@ func Run(parent context.Context, cfg Config) Report {
 		case event := <-stream:
 			if event.record != nil {
 				info := validateRecord(*event.record)
-				if info.reason != "" && len(report.Diagnostics) < cfg.MaxDiagnostics {
-					report.Diagnostics = append(report.Diagnostics, newDiagnostic(info.reason, phase, *event.record))
+				if info.reason != "" {
+					if len(report.Diagnostics) < cfg.MaxDiagnostics {
+						report.Diagnostics = append(report.Diagnostics, newDiagnostic(info.reason, phase, *event.record))
+					} else {
+						report.DiagnosticsTruncated = true
+					}
 				}
 				if info.responseID == "1" && !report.Lifecycle.Initialized {
 					if info.errorReply {
@@ -465,6 +470,9 @@ func FormatText(report Report) string {
 		b.WriteString("PASS stdout purity violations=0\n")
 	case "violations":
 		fmt.Fprintf(&b, "FAIL stdout purity violations=%d\n", len(report.Diagnostics))
+		if report.DiagnosticsTruncated {
+			b.WriteString("WARNING additional stdout purity violations omitted by max-diagnostics\n")
+		}
 	default:
 		fmt.Fprintf(&b, "ERROR %s\n", report.Lifecycle.Error)
 	}

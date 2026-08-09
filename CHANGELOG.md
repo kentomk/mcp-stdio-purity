@@ -45,3 +45,6 @@ All notable changes will be documented here.
 - Pin and reproduce the Inspector, mcp-compliance, and mcp-z false-green comparison.
 - Add clean-checkout quickstart and publisher payload gates.
 - Align the README quick-start heading with the publisher's machine contract and keep the 60-second promise explicit.
+# Unreleased
+
+- Report when bounded diagnostic output omitted additional stdout purity violations, so a low `--max-diagnostics` limit cannot be mistaken for a complete count.

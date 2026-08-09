@@ -16,5 +16,6 @@
     "maxStdoutBytes": 16777216,
     "maxDiagnostics": 20
   },
-  "diagnostics": []
+  "diagnostics": [],
+  "diagnosticsTruncated": false
 }

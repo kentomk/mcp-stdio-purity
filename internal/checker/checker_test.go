@@ -89,6 +89,7 @@ func TestRunFixtures(t *testing.T) {
 		{mode: "post-response-log", wantStatus: "violations", wantReason: "invalid-json", wantPhase: "cleanup"},
 		{mode: "cleanup-child", wantStatus: "violations", wantReason: "invalid-json", wantPhase: "cleanup"},
 		{mode: "many-invalid", wantStatus: "violations", wantReason: "invalid-json", wantCount: 20, wantPhase: "initialize"},
+		{mode: "many-invalid-truncated", wantStatus: "violations", wantReason: "invalid-json", wantCount: 2, wantPhase: "initialize", configure: func(config *Config) { config.MaxDiagnostics = 2 }},
 		{mode: "oversize", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64 }},
 		{mode: "oversize-unterminated", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64 }},
 		{mode: "total-limit", wantStatus: "error", configure: func(config *Config) { config.MaxLineBytes = 64; config.MaxStdoutBytes = 100 }},
@@ -136,6 +137,9 @@ func TestRunFixtures(t *testing.T) {
 					t.Fatalf("phase=%q, want %q", report.Diagnostics[0].Phase, test.wantPhase)
 				}
 			}
+			if test.mode == "many-invalid-truncated" && !report.DiagnosticsTruncated {
+				t.Fatal("diagnosticsTruncated=false, want true")
+			}
 			encoded, err := json.Marshal(report)
 			if err != nil {
 				t.Fatal(err)
@@ -174,7 +178,7 @@ func TestHelperProcess(t *testing.T) {
 	if mode == "startup-banner" {
 		fmt.Println("SECRET_CANARY startup")
 	}
-	if mode == "many-invalid" {
+	if mode == "many-invalid" || mode == "many-invalid-truncated" {
 		for range 25 {
 			fmt.Println("SECRET_CANARY repeated")
 		}

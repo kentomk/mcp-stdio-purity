@@ -26,5 +26,6 @@
       "message": "stdout record is not a valid JSON-RPC 2.0 message",
       "remediation": "route logs and descendant output to stderr, then rerun the preflight"
     }
-  ]
+  ],
+  "diagnosticsTruncated": false
 }

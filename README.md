@@ -111,6 +111,10 @@ mcp-stdio-purity check --timeout 10s --cleanup-grace 250ms \
 - `1`: one or more `MSP001` stdout purity violations were found.
 - `2`: arguments, spawn, timeout, lifecycle, or resource-limit failure.
 
+JSON reports set `diagnosticsTruncated: true` when more violations occurred than
+`--max-diagnostics` allowed to be retained. Text reports emit a warning in the
+same case; raise the limit only when the server's bounded output is understood.
+
 If a purity violation and an operational failure coexist, exit `1` wins so CI does not lose the contract failure.
 
 ## Failure triage
