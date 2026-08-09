@@ -313,7 +313,6 @@ func readStream(r io.Reader, maxLine, maxTotal int, out chan<- streamEvent) {
 	for {
 		fragment, err := reader.ReadSlice('\n')
 		if len(fragment) > 0 {
-			line++
 			if len(pending)+len(fragment) > maxLine {
 				out <- streamEvent{err: errors.New("stdout line limit exceeded"), eof: true}
 				return
@@ -327,6 +326,7 @@ func readStream(r io.Reader, maxLine, maxTotal int, out chan<- streamEvent) {
 		}
 		if err == nil {
 			content := append([]byte(nil), pending[:len(pending)-1]...)
+			line++
 			out <- streamEvent{record: &record{data: content, line: line, offset: offset}}
 			offset += int64(len(pending))
 			pending = pending[:0]
@@ -338,6 +338,7 @@ func readStream(r io.Reader, maxLine, maxTotal int, out chan<- streamEvent) {
 		if err == io.EOF {
 			if len(pending) > 0 {
 				content := append([]byte(nil), pending...)
+				line++
 				out <- streamEvent{record: &record{data: content, line: line, offset: offset, unterminated: true}}
 				offset += int64(len(pending))
 			}

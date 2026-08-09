@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T15:12:00Z — long-record line-number accounting
+
+- Fixed the bounded stdout framer so a record larger than its internal read buffer is counted as one logical line, preserving accurate `MSP001` line numbers and offsets without relaxing the configured line or total-byte limits.
+- Added a regression covering a 70 KiB newline-terminated record split across `ReadSlice` fragments. `go test ./...`, `go vet ./...`, and the quality gate pass; the full race fixture suite remains timing-sensitive under race instrumentation because existing 1-second cleanup bounds are exceeded.
+
 ### 2026-08-09T08:33:00Z — incremental stdout bound enforcement
 
 - Replaced unbounded `ReadBytes` line buffering with incremental `ReadSlice` accumulation that fails at `max-line-bytes` or `max-stdout-bytes`, including unterminated records.

@@ -56,6 +56,22 @@ func TestValidateRecord(t *testing.T) {
 	}
 }
 
+func TestReadStreamCountsFragmentsAsOneRecord(t *testing.T) {
+	data := append(bytes.Repeat([]byte{'x'}, 70*1024), '\n')
+	out := make(chan streamEvent, 2)
+	readStream(bytes.NewReader(data), 128*1024, 128*1024, out)
+	first := <-out
+	if first.record == nil || first.record.line != 1 {
+		t.Fatalf("got first event=%+v, want record line 1", first)
+	}
+	if first.record.offset != 0 || len(first.record.data) != 70*1024 {
+		t.Fatalf("got offset=%d bytes=%d, want offset=0 bytes=%d", first.record.offset, len(first.record.data), 70*1024)
+	}
+	if event := <-out; !event.eof {
+		t.Fatalf("got final event=%+v, want EOF", event)
+	}
+}
+
 func TestRunFixtures(t *testing.T) {
 	tests := []struct {
 		mode       string
