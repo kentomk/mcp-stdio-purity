@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T19:50:00Z — latest public Action revision alignment
+
+- Broker status confirmed public main `2d127c546321682b175d4ced66bc47abe10c417e` with successful CI and complete `v0.1.3` release assets, while the README Action example still pinned the prior `54d3b9ab59e64ea4a869e9b4c4e873645229ee13` revision.
+- Updated the English Action example and publisher regression to the latest broker-verified public main. Runtime behavior, release contents, and adoption claims are unchanged.
+
 ### 2026-08-09T19:41:00Z — latest public Action revision alignment
 
 - Broker status confirmed public main `54d3b9ab59e64ea4a869e9b4c4e873645229ee13` with successful CI and complete `v0.1.3` release assets, while the README Action example still pinned the prior `73c0b5ddacb702a6027efaa61cbda25b826b4849` revision.
