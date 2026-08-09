@@ -4,6 +4,7 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Give integration fixtures a bounded two-second cleanup window so the full lifecycle suite remains stable under race instrumentation without changing the CLI's 250 ms default.
 - Count a long newline-delimited stdout record as one line even when the bounded reader receives it in multiple fragments.
 - Refresh the immutable Action example to public main `b7721b9b` and reject the superseded `563d134` pin in the publisher contract.
 - Fix the copy-ready archive install example to use the extracted directory and create the user binary directory in a fresh home.

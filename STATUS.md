@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T15:25:00Z — race-instrumented lifecycle fixture stability
+
+- Increased only the integration fixture cleanup observation window from one to two seconds and widened its bounded-duration assertion to four seconds, keeping the product default at 250 ms while avoiding false failures from race scheduling overhead.
+- The full lifecycle test now exercises the existing cleanup-child, timeout, and process termination cases with a finite race-safe bound; no protocol scope or runtime default changed.
+
 ### 2026-08-09T15:12:00Z — long-record line-number accounting
 
 - Fixed the bounded stdout framer so a record larger than its internal read buffer is counted as one logical line, preserving accurate `MSP001` line numbers and offsets without relaxing the configured line or total-byte limits.

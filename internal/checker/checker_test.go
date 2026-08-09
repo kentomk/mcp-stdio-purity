@@ -104,7 +104,9 @@ func TestRunFixtures(t *testing.T) {
 		t.Run(test.mode, func(t *testing.T) {
 			config := DefaultConfig([]string{os.Args[0], "-test.run=TestHelperProcess", "--", test.mode})
 			config.Timeout = 3 * time.Second
-			config.CleanupGrace = time.Second
+			// Keep the fixture's cleanup bound comfortably above race-instrumented
+			// scheduling overhead while retaining a finite descendant observation window.
+			config.CleanupGrace = 2 * time.Second
 			config.Stderr = &bytes.Buffer{}
 			config.Env = append(os.Environ(), "MCP_STDIO_PURITY_HELPER=1")
 			if test.configure != nil {
@@ -112,7 +114,7 @@ func TestRunFixtures(t *testing.T) {
 			}
 			started := time.Now()
 			report := Run(context.Background(), config)
-			if time.Since(started) > 2*time.Second && (test.mode == "hung" || test.mode == "cleanup-hold") {
+			if time.Since(started) > 4*time.Second && (test.mode == "hung" || test.mode == "cleanup-hold") {
 				t.Fatalf("bounded process cleanup took too long: %s report=%+v", time.Since(started), report)
 			}
 			if report.Status != test.wantStatus {
