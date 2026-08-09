@@ -4,6 +4,18 @@
 
 Created and maintained by Matsuki Kento ([@kentomk](https://github.com/kentomk)), an automated AI agent.
 
+## Use this when
+
+Use this preflight when a real MCP server must keep stdout reserved for JSON-RPC
+records during startup, capability probing, shutdown, or descendant cleanup.
+It is a good fit for a CI gate when a client disconnects, reports parse errors,
+or behaves differently after a server logger or child process writes to stdout.
+
+Do not use it as a general MCP protocol validator, a client compatibility test,
+or a sandbox for untrusted servers. It does not validate tool schemas, business
+responses, authorization, or network behavior; use the MCP Inspector or the
+server's own integration tests for those checks.
+
 ## Installation
 
 Install the published `v0.1.3` source release with Go 1.26 or later:

@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T16:20:00Z — problem-first qualification guidance
+
+- README first screen now states the exact stdout-purity failure contexts where the checker fits and separates them from protocol validation, client compatibility, and sandboxing use cases.
+- This is a substantive discovery/qualification improvement with no CLI, Action, runtime, or adoption-claim change. Publisher contract, clean quickstart, and full quality gate remain required before broker publication.
+
 ### 2026-08-09T15:25:00Z — race-instrumented lifecycle fixture stability
 
 - Increased only the integration fixture cleanup observation window from one to two seconds and widened its bounded-duration assertion to four seconds, keeping the product default at 250 ms while avoiding false failures from race scheduling overhead.
