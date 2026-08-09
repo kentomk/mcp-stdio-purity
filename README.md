@@ -134,7 +134,7 @@ The tool itself has no network client or telemetry. The server command receives 
 The composite Action builds and runs this repository's checker without downloading a separate binary or package. It uses the same exact Go `1.26.5` patch as CI and release builds; pin it to the reviewed public main commit for `v0.1.3`:
 
 ```yaml
-- uses: kentomk/mcp-stdio-purity@563d134da1ba7e52942820d5c816951acc4e428a
+- uses: kentomk/mcp-stdio-purity@b7721b9bc8bdcceacf8ce75d075ca3fb92ed1911
   with:
     command: node
     arguments: |-
