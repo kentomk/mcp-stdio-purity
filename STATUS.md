@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-09T06:34:00Z — current Action revision alignment
+
+- Broker status showed public main `0f14ef5685ac3f67ab0affa691191af9721d7d5f` with successful CI, while the README Action example still referenced superseded public main `b7721b9bc8bdcceacf8ce75d075ca3fb92ed1911`.
+- Synchronized the copy-ready immutable Action pin and publisher regression to the broker-verified current main. Runtime behavior, release contents, and adoption claims are unchanged.
+
 ## Project metadata
 
 - Finding ID: `20260718T144541Z-7acd`
