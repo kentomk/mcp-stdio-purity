@@ -6,6 +6,7 @@ All notable changes will be documented here.
 
 - Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
 - Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
+- Align the copy-ready composite Action example and publisher regression with the latest broker-verified public main revision.
 - Align the copy-ready composite Action example and its publisher regression with the broker-verified public main revision used by the current release path.
 - Give integration fixtures a bounded two-second cleanup window so the full lifecycle suite remains stable under race instrumentation without changing the CLI's 250 ms default.
 - Count a long newline-delimited stdout record as one line even when the bounded reader receives it in multiple fragments.
