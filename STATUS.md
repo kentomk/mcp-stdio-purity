@@ -1,5 +1,13 @@
 # mcp-stdio-purity status
 
+### 2026-08-10T08:55:00Z — align macOS archive verification safety contract
+
+- The copy-ready macOS verification example now requires exactly one selected
+  checksum row, rejects absolute or `..` tar members, extracts into a cleaned
+  temporary directory, and checks the extracted version before use.
+- Added publisher-contract coverage for the macOS command block. Protocol
+  behavior, release assets, support matrix, and adoption claims are unchanged.
+
 ### 2026-08-10T06:05:00Z — harden standalone archive verification guidance
 
 - The dedicated release-archive verification example now uses the same

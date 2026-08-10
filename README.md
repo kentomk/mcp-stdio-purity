@@ -70,7 +70,15 @@ check succeeds.
 On macOS, replace the verification command with:
 
 ```sh
-grep "  ${archive}$" SHA256SUMS | shasum -a 256 --check -
+checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
+test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | shasum -a 256 --check -
+unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
+test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
+extract_dir=$(mktemp -d)
+trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
+tar -xzf "$archive" -C "$extract_dir"
+"$extract_dir/${archive%.tar.gz}/mcp-stdio-purity" version
 ```
 
 Replace `linux_amd64` with `linux_arm64`, `darwin_amd64`, or `darwin_arm64`

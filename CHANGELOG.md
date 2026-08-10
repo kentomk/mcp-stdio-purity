@@ -4,6 +4,10 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Align the macOS archive verification example with the Linux fail-closed
+  contract: require one checksum row, reject unsafe tar members, extract into a
+  temporary directory, and verify the extracted version before use.
+
 - Harden the release-archive verification example with exact-one checksum-row
   and unsafe tar member-path checks before extraction.
 - Pin the copy-ready composite Action to the immutable v0.1.4 release revision instead of moving public main, preventing routine maintenance commits from invalidating the documented integration.

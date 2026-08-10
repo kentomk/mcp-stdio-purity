@@ -68,6 +68,13 @@ checksum_checks=$(grep -Fc "checksum_matches=\$(grep -Ec" README.md)
 unsafe_path_checks=$(grep -Fc "unsafe_member=\$(tar -tzf" README.md)
 test "$checksum_checks" -ge 3
 test "$unsafe_path_checks" -ge 3
+# shellcheck disable=SC2016
+macos_block=$(sed -n '/On macOS, replace the verification command with:/,/Replace `linux_amd64`/p' README.md)
+printf '%s\n' "$macos_block" | grep -Fq 'shasum -a 256 --check -'
+# shellcheck disable=SC2016
+printf '%s\n' "$macos_block" | grep -Fq 'unsafe_member=$(tar -tzf "$archive"'
+# shellcheck disable=SC2016
+printf '%s\n' "$macos_block" | grep -Fq 'tar -xzf "$archive" -C "$extract_dir"'
 grep -Fq 'The published' SECURITY.md
 grep -Fq 'v0.1.4' SECURITY.md
 if grep -Fq 'not published yet' SECURITY.md; then
