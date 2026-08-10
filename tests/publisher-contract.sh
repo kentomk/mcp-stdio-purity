@@ -50,12 +50,20 @@ grep -Eq '60-second quick start' README.md
 grep -Fq 'releases/tag/v0.1.4' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.4' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@4724c0203a400c6b26e99d7cc00e17f4a5112eff # v0.1.4 release revision' README.md
-grep -Fq "grep \"  \${archive}\$\" SHA256SUMS | sha256sum --check --strict -" README.md
+grep -Fq "grep -E \"^[0-9a-fA-F]{64}  \$archive\$\" SHA256SUMS | sha256sum --check --strict -" README.md
+grep -Fq 'expected exactly one checksum row' README.md
+grep -Fq 'archive contains an unsafe member path' README.md
+grep -Fq "extract_dir=\$(mktemp -d)" README.md
+grep -Fq "tar -xzf \"\$archive\" -C \"\$extract_dir\"" README.md
 grep -Fq 'curl -fsSLo SHA256SUMS' README.md
 grep -Fq "mkdir -p \"\$HOME/.local/bin\"" README.md
-grep -Fq 'install -m 0755 mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity' README.md
-grep -Fq './mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity version' README.md
+grep -Fq "install -m 0755 \"\$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity\"" README.md
+grep -Fq "\"\$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity\" version" README.md
 grep -Fq 'shasum -a 256 --check -' README.md
+checksum_checks=$(grep -Fc "checksum_matches=\$(grep -Ec" README.md)
+unsafe_path_checks=$(grep -Fc "unsafe_member=\$(tar -tzf" README.md)
+test "$checksum_checks" -ge 3
+test "$unsafe_path_checks" -ge 3
 grep -Fq 'The published' SECURITY.md
 grep -Fq 'v0.1.4' SECURITY.md
 if grep -Fq 'not published yet' SECURITY.md; then

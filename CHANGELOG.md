@@ -4,6 +4,8 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Harden the release-archive verification example with exact-one checksum-row
+  and unsafe tar member-path checks before extraction.
 - Pin the copy-ready composite Action to the immutable v0.1.4 release revision instead of moving public main, preventing routine maintenance commits from invalidating the documented integration.
 
 - Align the copy-ready composite Action example and stale-pin regression with

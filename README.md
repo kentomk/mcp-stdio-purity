@@ -31,9 +31,15 @@ all four platform archives to be present.
 
 ```sh
 archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
-grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
-tar -xzf "$archive"
-./mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity version
+checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
+test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
+test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
+extract_dir=$(mktemp -d)
+trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
+tar -xzf "$archive" -C "$extract_dir"
+"$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity" version
 ```
 
 For a Linux amd64 runner, the complete download, verification, and install path is:
@@ -43,10 +49,17 @@ archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
 base=https://github.com/kentomk/mcp-stdio-purity/releases/download/v0.1.4
 curl -fsSL "$base/$archive" -o "$archive"
 curl -fsSLo SHA256SUMS "$base/SHA256SUMS"
-grep "  $archive$" SHA256SUMS | sha256sum --check --strict -
-tar -xzf "$archive"
+checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
+test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
+test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
+extract_dir=$(mktemp -d)
+trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
+tar -xzf "$archive" -C "$extract_dir"
 mkdir -p "$HOME/.local/bin"
-install -m 0755 mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity "$HOME/.local/bin/mcp-stdio-purity"
+install -m 0755 "$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity" "$HOME/.local/bin/mcp-stdio-purity.new"
+mv -f "$HOME/.local/bin/mcp-stdio-purity.new" "$HOME/.local/bin/mcp-stdio-purity"
 mcp-stdio-purity --help
 ```
 
@@ -168,7 +181,11 @@ Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. 
 
 ```sh
 archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
-grep "  ${archive}$" SHA256SUMS | sha256sum --check --strict -
+checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
+test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
+test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
 ```
 
 Use `shasum -a 256 --check -` instead of `sha256sum --check --strict -` on

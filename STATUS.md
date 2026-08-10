@@ -1,5 +1,20 @@
 # mcp-stdio-purity status
 
+### 2026-08-10T06:05:00Z — harden standalone archive verification guidance
+
+- The dedicated release-archive verification example now uses the same
+  fail-closed exact-one checksum-row and unsafe-member-path checks as the
+  install examples, so users who verify before a later manual extraction do
+  not get a weaker safety recipe.
+- Added publisher-contract regressions for all three archive verification
+  contexts. Runtime behavior, release assets, support matrix, and adoption
+  claims are unchanged.
+
+### 2026-08-10T05:28:00Z — fail-closed archive installation boundary
+
+- The published archive examples now require exactly one checksum row, reject absolute or `..` member paths before extraction, and extract into a cleaned temporary directory before replacing the installed binary.
+- Publisher contract coverage requires the checksum, path, and temporary-extraction commands. Protocol behavior, release contents, and adoption claims are unchanged.
+
 ### 2026-08-10T00:22:00Z — stabilize Action distribution pin
 
 - Replaced the README Action pin to moving public main with the immutable commit included in the published v0.1.4 release (`4724c0203a400c6b26e99d7cc00e17f4a5112eff`).
