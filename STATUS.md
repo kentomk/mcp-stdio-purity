@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-10T10:20:00Z — reject symlink archive payloads before use
+
+- The standalone, Linux install, and macOS copy-ready archive examples now require the extracted `mcp-stdio-purity` binary to be a regular non-symlink file before version checks or installation.
+- Added publisher-contract coverage for the regular-file boundary. Protocol behavior, release assets, support matrix, and adoption claims are unchanged. Local quality and broker publication are required before this maintenance is counted as public.
+
 ### 2026-08-10T08:55:00Z — align macOS archive verification safety contract
 
 - The copy-ready macOS verification example now requires exactly one selected

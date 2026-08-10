@@ -39,7 +39,9 @@ test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2;
 extract_dir=$(mktemp -d)
 trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
 tar -xzf "$archive" -C "$extract_dir"
-"$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity" version
+expected_binary="$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity"
+test -f "$expected_binary" && test ! -L "$expected_binary" || { echo 'archive binary is not a regular file' >&2; exit 2; }
+"$expected_binary" version
 ```
 
 For a Linux amd64 runner, the complete download, verification, and install path is:
@@ -57,8 +59,10 @@ test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2;
 extract_dir=$(mktemp -d)
 trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
 tar -xzf "$archive" -C "$extract_dir"
+expected_binary="$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity"
+test -f "$expected_binary" && test ! -L "$expected_binary" || { echo 'archive binary is not a regular file' >&2; exit 2; }
 mkdir -p "$HOME/.local/bin"
-install -m 0755 "$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity" "$HOME/.local/bin/mcp-stdio-purity.new"
+install -m 0755 "$expected_binary" "$HOME/.local/bin/mcp-stdio-purity.new"
 mv -f "$HOME/.local/bin/mcp-stdio-purity.new" "$HOME/.local/bin/mcp-stdio-purity"
 mcp-stdio-purity --help
 ```
@@ -78,7 +82,9 @@ test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2;
 extract_dir=$(mktemp -d)
 trap 'rm -rf "$extract_dir"' EXIT HUP INT TERM
 tar -xzf "$archive" -C "$extract_dir"
-"$extract_dir/${archive%.tar.gz}/mcp-stdio-purity" version
+expected_binary="$extract_dir/${archive%.tar.gz}/mcp-stdio-purity"
+test -f "$expected_binary" && test ! -L "$expected_binary" || { echo 'archive binary is not a regular file' >&2; exit 2; }
+"$expected_binary" version
 ```
 
 Replace `linux_amd64` with `linux_arm64`, `darwin_amd64`, or `darwin_arm64`

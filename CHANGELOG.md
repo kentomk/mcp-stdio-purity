@@ -4,6 +4,10 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Require the extracted archive binary to be a regular non-symlink file in all
+  copy-ready verification and installation examples, with publisher-contract
+  coverage for the fail-closed boundary.
+
 - Align the macOS archive verification example with the Linux fail-closed
   contract: require one checksum row, reject unsafe tar members, extract into a
   temporary directory, and verify the extracted version before use.

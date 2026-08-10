@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC2016
 set -eu
 
 project_root=$(unset CDPATH; cd -- "$(dirname -- "$0")/.." && pwd)
@@ -59,10 +60,13 @@ grep -Fq 'expected exactly one checksum row' README.md
 grep -Fq 'archive contains an unsafe member path' README.md
 grep -Fq "extract_dir=\$(mktemp -d)" README.md
 grep -Fq "tar -xzf \"\$archive\" -C \"\$extract_dir\"" README.md
+# shellcheck disable=SC2016
+grep -Fq 'expected_binary="$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity"' README.md
+grep -Fq 'test -f "$expected_binary" && test ! -L "$expected_binary"' README.md
 grep -Fq 'curl -fsSLo SHA256SUMS' README.md
 grep -Fq "mkdir -p \"\$HOME/.local/bin\"" README.md
-grep -Fq "install -m 0755 \"\$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity\"" README.md
-grep -Fq "\"\$extract_dir/mcp-stdio-purity_v0.1.4_linux_amd64/mcp-stdio-purity\" version" README.md
+grep -Fq 'install -m 0755 "$expected_binary" "$HOME/.local/bin/mcp-stdio-purity.new"' README.md
+grep -Fq '"$expected_binary" version' README.md
 grep -Fq 'shasum -a 256 --check -' README.md
 checksum_checks=$(grep -Fc "checksum_matches=\$(grep -Ec" README.md)
 unsafe_path_checks=$(grep -Fc "unsafe_member=\$(tar -tzf" README.md)
@@ -75,6 +79,9 @@ printf '%s\n' "$macos_block" | grep -Fq 'shasum -a 256 --check -'
 printf '%s\n' "$macos_block" | grep -Fq 'unsafe_member=$(tar -tzf "$archive"'
 # shellcheck disable=SC2016
 printf '%s\n' "$macos_block" | grep -Fq 'tar -xzf "$archive" -C "$extract_dir"'
+# shellcheck disable=SC2016
+printf '%s\n' "$macos_block" | grep -Fq 'expected_binary="$extract_dir/${archive%.tar.gz}/mcp-stdio-purity"'
+printf '%s\n' "$macos_block" | grep -Fq 'test -f "$expected_binary" && test ! -L "$expected_binary"'
 grep -Fq 'The published' SECURITY.md
 grep -Fq 'v0.1.4' SECURITY.md
 if grep -Fq 'not published yet' SECURITY.md; then
