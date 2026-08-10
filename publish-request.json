@@ -73,5 +73,5 @@
   "differentiation": "A shell-free, content-safe preflight that owns raw stdout through bounded descendant cleanup and fails on every non-JSON-RPC record without emulating a full MCP client.",
   "testCommand": "scripts/publisher-gate.sh",
   "license": "MIT",
-  "commitMessage": "docs: refresh Action pin after latest live sync"
+  "commitMessage": "fix: pin Action example to immutable release revision"
 }

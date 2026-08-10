@@ -147,10 +147,10 @@ The tool itself has no network client or telemetry. The server command receives 
 
 ## GitHub Action
 
-The composite Action builds and runs this repository's checker without downloading a separate binary or package. It uses the same exact Go `1.26.5` patch as CI and release builds; pin it to the reviewed public main commit for `v0.1.4`:
+The composite Action builds and runs this repository's checker without downloading a separate binary or package. It uses the same exact Go `1.26.5` patch as CI and release builds; pin it to the immutable `v0.1.4` release revision:
 
 ```yaml
-- uses: kentomk/mcp-stdio-purity@34b74273667d360470794b0777a92284ece104a9
+- uses: kentomk/mcp-stdio-purity@4724c0203a400c6b26e99d7cc00e17f4a5112eff # v0.1.4 release revision
   with:
     command: node
     arguments: |-

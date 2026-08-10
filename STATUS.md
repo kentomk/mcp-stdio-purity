@@ -1,5 +1,10 @@
 # mcp-stdio-purity status
 
+### 2026-08-10T00:22:00Z — stabilize Action distribution pin
+
+- Replaced the README Action pin to moving public main with the immutable commit included in the published v0.1.4 release (`4724c0203a400c6b26e99d7cc00e17f4a5112eff`).
+- Updated the publisher regression and English guidance to enforce the release-bound revision. Routine maintenance commits can now update main without creating another stale-pin repair; a future release is the explicit update point.
+
 ### 2026-08-09T19:50:00Z — latest public Action revision alignment
 
 - Broker status confirmed public main `2d127c546321682b175d4ced66bc47abe10c417e` with successful CI and complete `v0.1.3` release assets, while the README Action example still pinned the prior `54d3b9ab59e64ea4a869e9b4c4e873645229ee13` revision.

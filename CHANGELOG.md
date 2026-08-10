@@ -4,6 +4,8 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Pin the copy-ready composite Action to the immutable v0.1.4 release revision instead of moving public main, preventing routine maintenance commits from invalidating the documented integration.
+
 - Align the copy-ready composite Action example and stale-pin regression with
   public main `bfb1959a09065decc4d060bbb04f34a2ce1054f0`.
 - Reconcile the copy-ready composite Action example with the post-publication
