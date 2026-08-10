@@ -55,8 +55,12 @@ printf '%s\n' "$quick_start_block" | grep -Fxq 'go build -o ./bin/mcp-stdio-puri
 grep -Fq 'releases/tag/v0.1.4' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.4' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@4724c0203a400c6b26e99d7cc00e17f4a5112eff # v0.1.4 release revision' README.md
-grep -Fq "grep -E \"^[0-9a-fA-F]{64}  \$archive\$\" SHA256SUMS | sha256sum --check --strict -" README.md
 grep -Fq 'expected exactly one checksum row' README.md
+portable_checksum_selectors=$(grep -Fc "checksum_tool='sha256sum --check --strict -'" README.md)
+test "$portable_checksum_selectors" -ge 3
+grep -Fq "checksum_tool='shasum -a 256 --check -'" README.md
+grep -Fq "need sha256sum or shasum for checksum verification" README.md
+grep -Fq 'sh -c "$checksum_tool"' README.md
 grep -Fq 'archive contains an unsafe member path' README.md
 grep -Fq "extract_dir=\$(mktemp -d)" README.md
 grep -Fq "tar -xzf \"\$archive\" -C \"\$extract_dir\"" README.md

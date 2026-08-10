@@ -4,6 +4,9 @@ All notable changes will be documented here.
 
 ## Unreleased
 
+- Make standalone, install, and release-archive checksum verification select
+  the available Linux/macOS verifier and fail closed when neither exists.
+
 - Require the extracted archive binary to be a regular non-symlink file in all
   copy-ready verification and installation examples, with publisher-contract
   coverage for the fail-closed boundary.

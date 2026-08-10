@@ -1,5 +1,14 @@
 # mcp-stdio-purity status
 
+### 2026-08-10T13:12:00Z — make archive checksum verification portable
+
+- The standalone, install, and release-archive examples now select
+  `sha256sum` or `shasum -a 256` at runtime and fail closed when neither is
+  available, so the documented verification path is executable on Linux and
+  macOS.
+- Added publisher-contract coverage for all three portable selector blocks;
+  protocol behavior, release assets, and adoption claims are unchanged.
+
 ### 2026-08-10T10:20:00Z — reject symlink archive payloads before use
 
 - The standalone, Linux install, and macOS copy-ready archive examples now require the extracted `mcp-stdio-purity` binary to be a regular non-symlink file before version checks or installation.

@@ -33,7 +33,15 @@ all four platform archives to be present.
 archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
 checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
 test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
-grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum_tool='sha256sum --check --strict -'
+elif command -v shasum >/dev/null 2>&1; then
+  checksum_tool='shasum -a 256 --check -'
+else
+  echo 'need sha256sum or shasum for checksum verification' >&2
+  exit 2
+fi
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sh -c "$checksum_tool"
 unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
 test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
 extract_dir=$(mktemp -d)
@@ -53,7 +61,15 @@ curl -fsSL "$base/$archive" -o "$archive"
 curl -fsSLo SHA256SUMS "$base/SHA256SUMS"
 checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
 test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
-grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum_tool='sha256sum --check --strict -'
+elif command -v shasum >/dev/null 2>&1; then
+  checksum_tool='shasum -a 256 --check -'
+else
+  echo 'need sha256sum or shasum for checksum verification' >&2
+  exit 2
+fi
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sh -c "$checksum_tool"
 unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
 test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
 extract_dir=$(mktemp -d)
@@ -198,13 +214,21 @@ Releases provide checksum-covered Linux and macOS archives for amd64 and arm64. 
 archive=mcp-stdio-purity_v0.1.4_linux_amd64.tar.gz
 checksum_matches=$(grep -Ec "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS || true)
 test "$checksum_matches" -eq 1 || { echo "expected exactly one checksum row for $archive" >&2; exit 2; }
-grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sha256sum --check --strict -
+if command -v sha256sum >/dev/null 2>&1; then
+  checksum_tool='sha256sum --check --strict -'
+elif command -v shasum >/dev/null 2>&1; then
+  checksum_tool='shasum -a 256 --check -'
+else
+  echo 'need sha256sum or shasum for checksum verification' >&2
+  exit 2
+fi
+grep -E "^[0-9a-fA-F]{64}  $archive$" SHA256SUMS | sh -c "$checksum_tool"
 unsafe_member=$(tar -tzf "$archive" | grep -E '(^/|(^|/)\.\.(\/|$))' || true)
 test -z "$unsafe_member" || { echo 'archive contains an unsafe member path' >&2; exit 2; }
 ```
 
-Use `shasum -a 256 --check -` instead of `sha256sum --check --strict -` on
-macOS. Source install remains available with
+The examples select `sha256sum` on Linux or `shasum -a 256` on macOS and fail
+closed if neither verifier is available. Source install remains available with
 `go install github.com/kentomk/mcp-stdio-purity/cmd/mcp-stdio-purity@v0.1.4`.
 
 ## Current scope
