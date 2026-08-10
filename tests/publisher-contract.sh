@@ -47,6 +47,10 @@ jq -e --slurpfile request publish-request.json '
 grep -Eq '^## Installation\b' README.md
 grep -Eq '^## Quick start\b' README.md
 grep -Eq '60-second quick start' README.md
+quick_start_line=$(grep -n -m 1 '^## Quick start$' README.md | cut -d: -f1)
+quick_start_block=$(tail -n "+$quick_start_line" README.md | sed -n '1,/^```$/p')
+printf '%s\n' "$quick_start_block" | grep -Fxq 'mkdir -p ./bin'
+printf '%s\n' "$quick_start_block" | grep -Fxq 'go build -o ./bin/mcp-stdio-purity ./cmd/mcp-stdio-purity'
 grep -Fq 'releases/tag/v0.1.4' README.md
 grep -Fq 'mcp-stdio-purity@v0.1.4' README.md
 grep -Fq 'uses: kentomk/mcp-stdio-purity@4724c0203a400c6b26e99d7cc00e17f4a5112eff # v0.1.4 release revision' README.md

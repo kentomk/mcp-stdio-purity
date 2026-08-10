@@ -82,6 +82,7 @@ network access is required.
 This 60-second quick start requires only Go 1.26 or later.
 
 ```sh
+mkdir -p ./bin
 go build -o ./bin/mcp-stdio-purity ./cmd/mcp-stdio-purity
 ./bin/mcp-stdio-purity check -- go run ./examples/fixture-server --mode startup-banner
 ```
